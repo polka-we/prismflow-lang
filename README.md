@@ -2,14 +2,14 @@
 
 **A small, readable scripting language built around streams — no `if`, no `while`, no `for`.**
 
-[Playground](https://polka-we.github.io/prismflow/) · [Tutorial](docs/tutorial.md) · [Русская версия](README.ru.md)
+[Playground](https://polka-we.github.io/prismflow-lang/) · [Tutorial](docs/tutorial.md) · [Русская версия](README.ru.md)
 
 ```
 users = [[name: "Anna", age: 20], [name: "Boris", age: 15], [name: "Vera", age: 31]]
 users where .age > 17 select .name :: print      // Anna, Vera
 ```
 
-Open the **[online playground](https://polka-we.github.io/prismflow/)** — it runs entirely in your browser
+Open the **[online playground](https://polka-we.github.io/prismflow-lang/)** — it runs entirely in your browser
 (a single `docs/index.html`, no server) and ships with ~30 examples in English and Russian.
 
 ## What makes it different

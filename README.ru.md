@@ -2,14 +2,14 @@
 
 **Небольшой читаемый скриптовый язык вокруг потоков — без `if`, `while` и `for`.**
 
-[Песочница](https://polka-we.github.io/prismflow/) · [Учебник](docs/tutorial.ru.md) · [English](README.md)
+[Песочница](https://polka-we.github.io/prismflow-lang/) · [Учебник](docs/tutorial.ru.md) · [English](README.md)
 
 ```
 users = [[name: "Аня", age: 20], [name: "Боря", age: 15], [name: "Вера", age: 31]]
 users where .age > 17 select .name :: print      // Аня, Вера
 ```
 
-**[Онлайн-песочница](https://polka-we.github.io/prismflow/)** работает целиком в браузере (один файл
+**[Онлайн-песочница](https://polka-we.github.io/prismflow-lang/)** работает целиком в браузере (один файл
 `docs/index.html`), с готовыми примерами на русском и английском.
 
 ## В чём уникальность
