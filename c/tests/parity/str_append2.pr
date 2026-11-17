@@ -1,0 +1,27 @@
+s := "seed" * 20
+keep := ["x"]
+range(400)::
+    s += `{_ % 7}`
+    is _ % 13 == 0 -> keep += s
+    else -> none
+    is _ % 50 == 0 -> s += "|"
+    else -> none
+t := keep[4]
+t += "tail"
+u := keep[4] + "other"
+print(len(keep), t.len, u.len, t[t.len - 1], u[u.len - 1])
+print(keep select len(_))
+print(keep select _[_.len - 1])
+print(s.len, s[0], s[s.len - 1])
+k = keep[6]
+print(k == keep[6], k.len)
+parts = (keep[11]).split("seed")
+print(parts.len)
+print((keep[3]).replace("seed", "X").len)
+w := ""
+range(200):: w += "line {_}\n"
+print(w.split("\n").len, w.len)
+q := "z" * 70
+r := q + "a"
+q2 := q + "b"
+print(r[70], q2[70], r.len, q2.len, r == q2)

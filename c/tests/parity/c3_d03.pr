@@ -1,0 +1,3 @@
+x = "a\tb\n\"q\" \\ {1}"
+print(x)
+print('single')

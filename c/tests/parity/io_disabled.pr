@@ -1,0 +1,5 @@
+print(file.read("a.txt"))
+print(file.write("a.txt", "x"))
+print(file.exists("a.txt"))
+print(http.get("http://127.0.0.1:1/"))
+print("[1, 2]".json(), json_str([1, [2, "a"]]))

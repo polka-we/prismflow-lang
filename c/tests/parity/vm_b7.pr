@@ -1,0 +1,9 @@
+f x =
+    zz := x
+    zz + 1
+print(f(1))
+g = 7
+h x =
+    g = x
+    g
+print(h(2))

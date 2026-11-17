@@ -1,0 +1,9 @@
+fact n = range(1, n + 1).reduce(1, _1 * _2)
+choose n k = div(fact(n), fact(k) * fact(n - k))
+
+// после :: имя элемента, затем блок с отступом
+range(8)::n
+    row = range(n + 1)
+        .map(choose(n, _))
+        .join(" ")
+    print(" " * (8 - n) + row)

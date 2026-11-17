@@ -1,0 +1,1 @@
+print([0].expand_bfs(v -> "a").to_list())

@@ -1,0 +1,5 @@
+Animal = type [name, sound]
+speak(a: Animal) = a.name + " " + a.sound
+d = Animal("pes", "gav")
+print(d.speak())
+print(speak(d))

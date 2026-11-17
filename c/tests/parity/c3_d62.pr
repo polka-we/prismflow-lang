@@ -1,0 +1,4 @@
+f(x) =
+    print("a")
+  print("b")
+f(1)

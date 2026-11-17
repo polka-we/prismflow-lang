@@ -1,0 +1,7 @@
+o = [name: "Аня", age: 20, tags: ["a", "b"]]
+print(o.name, o["age"], o.tags[1])
+print(o)
+o2 = [..o, age: 21]
+print(o2)
+k = [a: 1, b: 2]
+print(k.keys(), k.values())

@@ -1,0 +1,18 @@
+// Dijkstra with the built-in heap (arrays compare element by element, so [distance, vertex] works).
+graph = [[[1, 4], [2, 1]], [[3, 1]], [[1, 2], [3, 5]], []]   // graph[v] = [[to, weight], ...]
+dist := [1000000] * 4
+dist[0] := 0
+heap := []
+heap_push(heap, [0, 0])
+range(1000000):: _step
+    is len(heap) == 0 -> stop
+    top = heap_pop(heap)
+    d = top[0]
+    v = top[1]
+    is d > dist[v] -> next
+    graph[v]:: e
+        nd = d + e[1]
+        is nd < dist[e[0]] ->
+            dist[e[0]] := nd
+            heap_push(heap, [nd, e[0]])
+print(dist)                                  // [0, 3, 1, 4]

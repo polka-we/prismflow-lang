@@ -1,0 +1,9 @@
+g = [[1, 2], [3], [3], []]
+dist := [-1, -1, -1, -1]
+dist[0] := 0
+queue := [0]
+queue:: v
+    g[v] where dist[_] < 0 :: u
+        dist[u] := dist[v] + 1
+        queue += u
+print(dist)

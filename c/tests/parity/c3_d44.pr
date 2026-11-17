@@ -1,0 +1,1 @@
+print(range(10) where _ > 5 select _ * 2)

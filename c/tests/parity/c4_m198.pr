@@ -1,0 +1,1 @@
+print("12".ends_with("р"))

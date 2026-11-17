@@ -1,0 +1,1 @@
+print(request.ints().map(_ * 2).take(3).to_list())

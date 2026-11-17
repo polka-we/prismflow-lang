@@ -1,0 +1,3 @@
+T = type [a]
+T2 = type [a]
+print(T(1) == T2(1))

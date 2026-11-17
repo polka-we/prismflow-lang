@@ -1,0 +1,2 @@
+users = [[n: "a", ok: true], [n: "b", ok: false]]
+print(users.filter(_.ok).map(_.n))

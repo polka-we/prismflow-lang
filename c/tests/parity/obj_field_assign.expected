@@ -1,0 +1,4 @@
+[a: 117, b: [x: 3], c: 8]
+[name: "ab"]
+9223372036854775808
+RuntimeError (line 17): "g" is a constant (declared with =)

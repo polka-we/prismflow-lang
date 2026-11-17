@@ -1,0 +1,4 @@
+p = [1, 2]
+match p
+    [a, b] -> print(a + b)
+    _ -> print("?")

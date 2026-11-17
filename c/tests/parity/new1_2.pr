@@ -1,0 +1,1 @@
+print(sin(0), cos(0), pi, log(8, 2), log2(8), exp(1), atan2(1, 1), log10(1000), tan(1))

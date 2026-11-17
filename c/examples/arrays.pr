@@ -1,0 +1,40 @@
+arr := [1, 2, 3, 4, 5]
+arr += 6            // добавить элемент в конец
+print(arr)
+arr -= 2            // убрать 2 элемента с конца
+print(arr)
+gone = arr.remove(0) // убрать по индексу
+print(arr, "убрали", gone)
+
+// без := исходный массив не меняется: получается новый
+print(arr - 1, arr + 9, arr)
+print([...arr, 0, ...arr])    // раскрытие
+
+print("ab" * 3)     // ababab
+print([0] * 5)      // [0, 0, 0, 0, 0]
+
+// деструктуризация
+[age:, name:] = [age: 18, name: "Kirill"]
+print(name, age)
+[q, w] = [1, 2]
+print(q + w)
+
+users = [[18, "Kirill"], [19, "Alena"]] as [age, name]
+users::u -> print(u.name + " " + u.age)
+users::u -> print(u.name)
+print([...users[0], age: 20])
+
+// строки
+s = "  Hello, Prism  ".trim()
+print(s.upper(), s.len(), s.split(", "))
+print("a\nb".lines())
+
+// split() без аргументов делит по пробельным символам
+print("  много   пробелов  ".split())
+
+// копии
+x := [[1], [2]]
+shallow := x.copy()
+deep := x.dcopy()
+x[0][0] := 99
+print(shallow, deep)

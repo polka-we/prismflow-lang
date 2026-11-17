@@ -1,0 +1,1 @@
+print(range(3).to_list(), range(1, 4).to_list(), range(0, 10, 3).to_list())

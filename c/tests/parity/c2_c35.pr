@@ -1,0 +1,1 @@
+print(min(1, 2), max(3, 4), abs(-3), floor(2.7), ceil(2.1), round(2.5), int("5"), float("2.5"), str(5))

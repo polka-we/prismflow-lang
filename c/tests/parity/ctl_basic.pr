@@ -1,0 +1,27 @@
+s := 0
+range(10):: i
+    is i % 2 == 0 -> next
+    is i > 7 -> stop
+    s += i
+print(s)
+print(range(10).map(x -> is x % 3 == 0 -> next else -> x * 10).to_list())
+print(range(10).filter(x -> is x == 5 -> stop else -> x % 2 == 0).to_list())
+xs = [3, -1, 4, -5, 9]
+r := []
+xs:: x
+    is x < 0 -> next
+    r += x
+print(r)
+t := 0
+o = [a: 1, b: 2, c: 3]
+o:: k, v
+    is k == "b" -> next
+    t += v
+print(t)
+f n =
+    c := 0
+    range(n):: i
+        is i == 3 -> stop
+        c += 1
+    return c
+print(f(10))

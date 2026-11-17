@@ -1,0 +1,5 @@
+error("file access is disabled")
+error("file access is disabled")
+error("file access is disabled")
+error("http is disabled")
+[1, 2] [1,[2,"a"]]

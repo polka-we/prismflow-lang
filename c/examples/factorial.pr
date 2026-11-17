@@ -1,0 +1,29 @@
+// 1. по случаям
+fact 0 = 1
+fact n = n * fact(n - 1)
+print(fact(5))
+
+// 2. без состояния: reduce
+fact2 n = range(1, n + 1).reduce(1, _1 * _2)
+print(fact2(10))
+
+// 3. через изменяемое состояние
+fact3 num =
+    result := 1
+    range(1, num + 1)::k -> result *= k
+    return result
+print(fact3(5))
+
+// Фибоначчи через := и ::
+x := 0
+y := 1
+range(10)::
+    print(x)
+    nx = x + y
+    x := y
+    y := nx
+
+print("--- поток ---")
+// Фибоначчи как поток пар
+step([a, b]) = [b, a + b]
+step.from([0, 1]).take(10).map(_[0])::print

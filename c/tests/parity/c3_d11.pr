@@ -1,0 +1,2 @@
+fn(a, b = 2) = a + b
+print(fn(1))

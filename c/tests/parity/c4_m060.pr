@@ -1,0 +1,1 @@
+print(range(5).index_of(3))

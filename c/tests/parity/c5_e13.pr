@@ -1,0 +1,4 @@
+s = 0
+range(3) ::par i ->
+    s := s + i
+print(s)

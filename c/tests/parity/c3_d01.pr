@@ -1,0 +1,4 @@
+f([a, b]) = a * b
+print(f([3, 4]))
+g([name: n]) = n
+print(g([name: "z"]))

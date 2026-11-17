@@ -1,0 +1,10 @@
+c/prism
+c/prismflow
+c/*.o
+c/build/
+web/engine.js
+web/p35_prelude.js
+*.zip
+*.tar.gz
+*.bak
+.DS_Store

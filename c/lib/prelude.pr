@@ -1,0 +1,129 @@
+// Стандартная библиотека Prismflow, написанная на самом Prismflow:
+// один и тот же текст исполняют C-ядро и JS-песочница.
+// После правки запустите tools/gen_prelude.sh (C) и пересоберите песочницу (prism/build.js).
+
+// ---- числа ----
+lcm a b = is a == 0 or b == 0 -> 0 else -> div(abs(a * b), gcd(a, b))
+factorial n = range(2, n + 1).reduce(1, (a, b) -> a * b)
+prod xs = xs.reduce(1, (a, b) -> a * b)
+comb n k =
+    is k < 0 or k > n -> 0
+    else -> div(factorial(n), factorial(k) * factorial(n - k))
+bit_count n =
+    bits := 0
+    m := n
+    range(64):: _i
+        is m <= 0 -> stop
+        bits := bits + m % 2
+        m := div(m, 2)
+    bits
+isqrt n =
+    is n < 0 -> error("isqrt: negative number")
+    is n < 2 -> n
+    else ->
+        nr x = div(x + div(n, x), 2)
+        nr.from(n).until(x -> x * x <= n).last()
+
+// ---- потоки ----
+until s p =
+    done := false
+    chk x =
+        r = not done
+        done := p(x)
+        r
+    s.take_while(chk)
+iterate f x = f.from(x)
+unfold f seed =
+    st := seed
+    step _k =
+        r = f(st)
+        is r == none -> none
+        else ->
+            st := r[1]
+            r[0]
+    step.from(0).skip(1).take_while(x -> x != none)
+
+// ---- поиск в отсортированном массиве ----
+bisect_left xs x =
+    lo := 0
+    hi := len(xs)
+    range(64):: _i
+        is lo >= hi -> stop
+        mid = div(lo + hi, 2)
+        is xs[mid] < x -> lo := mid + 1
+        else -> hi := mid
+    lo
+bisect_right xs x =
+    lo := 0
+    hi := len(xs)
+    range(64):: _i
+        is lo >= hi -> stop
+        mid = div(lo + hi, 2)
+        is x < xs[mid] -> hi := mid
+        else -> lo := mid + 1
+    lo
+partition_point xs p =
+    lo := 0
+    hi := len(xs)
+    range(64):: _i
+        is lo >= hi -> stop
+        mid = div(lo + hi, 2)
+        is p(xs[mid]) -> lo := mid + 1
+        else -> hi := mid
+    lo
+
+// ---- куча (минимальная; элементы сравниваются как числа, строки или массивы) ----
+heap_push h x =
+    h += x
+    i := len(h) - 1
+    range(64):: _k
+        is i <= 0 -> stop
+        par = div(i - 1, 2)
+        is h[i] < h[par] ->
+            h[i], h[par] := h[par], h[i]
+            i := par
+        else -> stop
+    none
+heap_peek h = is len(h) == 0 -> error("heap_peek: heap is empty") else -> h[0]
+heap_pop h =
+    is len(h) == 0 -> error("heap_pop: heap is empty")
+    else ->
+        top = h[0]
+        tail = h.pop()
+        is len(h) > 0 ->
+            h[0] := tail
+            i := 0
+            range(64):: _k
+                l = 2 * i + 1
+                is l >= len(h) -> stop
+                r = l + 1
+                c = is r < len(h) and h[r] < h[l] -> r else -> l
+                is h[c] < h[i] ->
+                    h[c], h[i] := h[i], h[c]
+                    i := c
+                else -> stop
+        top
+
+// ---- массивы ----
+transpose m = is len(m) == 0 -> [] else -> range(len(m[0])).map(j -> m.map(r -> r[j]).to_list()).to_list()
+rotate xs k =
+    n = len(xs)
+    is n == 0 -> xs
+    else ->
+        s = k % n
+        [...xs[s..n], ...xs[0..s]]
+
+// ---- комбинаторика (результат — массив массивов) ----
+product xs ys = xs.map(x -> ys.map(y -> [x, y]).to_list()).flat().to_list()
+combinations xs k =
+    is k == 0 -> [[]]
+    is len(xs) < k -> []
+    else ->
+        head = xs[0]
+        tl = xs[1..len(xs)]
+        with_head = combinations(tl, k - 1).map(c -> [head, ...c]).to_list()
+        [...with_head, ...combinations(tl, k)]
+_perm_at xs i = permutations([...xs[0..i], ...xs[i + 1..len(xs)]]).map(p -> [xs[i], ...p]).to_list()
+permutations xs =
+    is len(xs) <= 1 -> [xs]
+    else -> range(len(xs)).map(i -> _perm_at(xs, i)).flat().to_list()

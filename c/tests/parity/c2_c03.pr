@@ -1,0 +1,5 @@
+s = "привет мир"
+print(s.upper(), len(s), s[0], s[1:4], s.split(" "))
+print("a{1+2}b {s}")
+print(s - 2)
+print("ab" * 3)

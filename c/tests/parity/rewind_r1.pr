@@ -1,0 +1,4 @@
+out := []
+range(50) :: i ->
+    out += [i, "s" + i.to_string()]
+print(out.len(), out[49], out[3])

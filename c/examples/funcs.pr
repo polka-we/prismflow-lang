@@ -1,0 +1,41 @@
+// заголовок: имя параметры = выражение
+square n = n ** 2
+add a b = a + b
+print(square(7), add(1, 2))
+
+// блок: после "=" пустая строка-конец, тело с отступом
+greet name =
+    text = "Привет, {name}!"
+    print(text.interpret())
+greet("Kirill")
+
+// безымянные функции: _ , _1, _2
+inc = _ + 1
+sum = _1 + _2
+print(inc(4), sum(2, 3))
+print(range(1, 6).reduce(0, _1 + _2))
+
+// _ в обычном вызове: целое выражение - функция, голый _ - частичный вызов
+twice(f, x) = f(f(x))
+print(twice(_ * 2, 5))        // 20
+add10 = add(10, _)
+print(add10(5))               // 15
+
+// функция - значение: имя можно передать
+print(range(1, 5).reduce(0, add))
+
+// функция по случаям: шаблоны сверху вниз
+fact 0 = 1
+fact n = n * fact(n - 1)
+print(fact(10))
+
+describe([age: 18]) = "ровно восемнадцать"
+describe([first, ...rest]) = "массив, первый " + first
+describe(v) = "что-то другое"
+print(describe([age: 18, x: 1]), describe([7, 8]), describe(5))
+
+// оценка: is-цепочка как тело
+grade s = is s >= 90 -> "A"
+          is s >= 80 -> "B"
+          else -> "C"
+print(grade(95), grade(85), grade(10))

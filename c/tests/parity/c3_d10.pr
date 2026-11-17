@@ -1,0 +1,5 @@
+c = 0
+range(3) :: i ->
+    range(3) :: j ->
+        c := c + 1
+print(c)

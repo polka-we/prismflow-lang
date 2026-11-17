@@ -1,0 +1,4 @@
+r = [1, 2] match
+    [a, b] when a < b -> "inc"
+    _ -> "other"
+print(r)

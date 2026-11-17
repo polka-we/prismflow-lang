@@ -1,0 +1,1 @@
+print(1 is int and 2 is int)

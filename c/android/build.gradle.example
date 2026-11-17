@@ -1,0 +1,12 @@
+// Фрагмент app/build.gradle (Android SDK + NDK): подключение ядра Prism
+android {
+    defaultConfig {
+        // без -O2 debug-сборка компилирует C с -O0, и Prism работает в 2,5-3 раза медленнее
+        externalNativeBuild { cmake { arguments "-DANDROID_STL=none", "-DCMAKE_BUILD_TYPE=Release"; cFlags "-O2" } }
+        ndk { abiFilters "arm64-v8a", "armeabi-v7a", "x86_64" }
+    }
+    externalNativeBuild {
+        cmake { path "../prism-c/CMakeLists.txt" }   // путь к этой папке
+    }
+}
+// Java: скопируйте android/src/main/java/prism/Prism.java в app/src/main/java/prism/

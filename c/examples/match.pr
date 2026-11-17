@@ -1,0 +1,40 @@
+l = 4
+// без значения слева: проверяемое значение подставляется само
+l match
+    is % 2 == 0 -> print("Yes")
+    else -> print("No")
+
+// условие можно писать полностью
+l match
+    is l % 2 == 0 -> print("Yes")
+    else -> print("No")
+
+// несколько условий, ветка-блок
+x = 2
+x match
+    is x > 2 -> print("3")
+    is x > 1 ->
+        print("2")
+    else -> print("0")
+
+// match возвращает значение
+is_even n = n match
+    is % 2 == 0 -> true
+    else -> false
+print(range(10).filter(is_even).to_list())
+
+// проверка по типу и по структуре
+describe v = v match
+    is none -> "пусто"
+    is error -> "ошибка: " + v.message
+    is [age: 18] -> "ровно восемнадцать"
+    is [first, ...rest] -> "массив, первый " + first + ", ещё " + rest.len()
+    is int -> "целое число"
+    is float -> "дробное число"
+    else -> "что-то другое"
+print(describe(none))
+print(describe(10 / 0))
+print(describe([age: 18, name: "Kirill"]))
+print(describe([7, 8, 9]))
+print(describe(42), describe(4.5))
+print(describe("текст"))

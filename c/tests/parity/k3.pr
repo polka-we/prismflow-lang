@@ -1,0 +1,10 @@
+o := [:]
+range(100) :: i ->
+    o[str(100 - i)] := i
+    o["k" + str(i)] := i
+print(o.keys().take(5).to_list(), len(o), o["50"], o["k7"], o["zz"])
+w := [:]
+words = "a b c a b a d e f g h i j k l m n o p q r s t a b".split(" ")
+words :: x ->
+    w[x] := (w[x] ?? 0) + 1
+print(w)

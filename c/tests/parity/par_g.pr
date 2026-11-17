@@ -1,0 +1,5 @@
+fib 0 = 0
+fib 1 = 1
+fib n = fib(n - 1) + fib(n - 2)
+[25, 22, 24, 23, 21, 26] ::par i, n
+    print(i, n, fib(n))

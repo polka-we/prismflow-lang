@@ -1,0 +1,5 @@
+f(x) =
+    time.wait(5)
+    x + 1
+r = await f(1)
+print(r)

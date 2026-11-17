@@ -1,0 +1,17 @@
+type Bank [name, accounts]
+create_bank name = Bank(name, [:])
+open(Bank b, user, balance) =
+    b.accounts[user] := balance
+get_balance(Bank b, user) =
+    b.accounts[user] ?? 0
+my_bank := create_bank("Центральный")
+my_bank.open("Аня", 1000)
+print(my_bank.get_balance("Аня"))
+print(my_bank.get_balance("Боря"))
+g(x) =
+    y = x + 1
+    y * 3
+print(g(1))
+h(x) =
+    z = x
+print(h(2))

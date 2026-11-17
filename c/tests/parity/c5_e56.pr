@@ -1,0 +1,4 @@
+big = 10 ** 25
+print(big, big + 1, big * big, big - big, -big, big > 0, big == 10 ** 25, big % 7, big div 7)
+print(type(big), str(big), big.to_string())
+print(range(30).reduce(1, _ * (_ + 1)) )

@@ -1,0 +1,5 @@
+o := [a: 1]
+range(30) :: i ->
+    o["k" + i.to_string()] := "v" + i.to_string()
+    o.last := [i, i * 2]
+print(o.k7, o.k29, o.last)

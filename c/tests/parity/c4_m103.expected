@@ -1,0 +1,1 @@
+RuntimeError (line 1): .remove requires an array stored in a variable

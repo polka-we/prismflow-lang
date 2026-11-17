@@ -1,0 +1,4 @@
+v = [1, 2, 3]
+w = v
+w.push(4)
+print(v, w)

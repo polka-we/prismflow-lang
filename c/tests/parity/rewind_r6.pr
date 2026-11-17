@@ -1,0 +1,12 @@
+acc := ""
+range(30) :: i ->
+    w = "ab" + i.to_string()
+    acc := acc + w
+print(acc)
+n := 0
+words = ["x", "yy", "zzz"]
+range(1000) :: i ->
+    w = words[i % 3] + "!"
+    p = [w, w.len()]
+    n := n + p[1]
+print(n)

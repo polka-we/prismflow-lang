@@ -1,0 +1,21 @@
+a := 1
+b := 2
+a, b := b, a
+print(a, b)
+x, y = 3, 4
+print(x, y)
+xs := [1, 2, 3, 4]
+i := 0
+j := 3
+xs[i], xs[j] := xs[j], xs[i]
+print(xs)
+o := [p: 1, q: 2]
+o.p, o.q := o.q, o.p
+print(o)
+fib n =
+    f0 := 0
+    f1 := 1
+    range(n):: _k
+        f0, f1 := f1, f0 + f1
+    f0
+print(fib(10))

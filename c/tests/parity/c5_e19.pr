@@ -1,0 +1,2 @@
+print(range(10).take(3).map(_ * 2).to_list())
+print(range(1000000000).take(3).to_list())

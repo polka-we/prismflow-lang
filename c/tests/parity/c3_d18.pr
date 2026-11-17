@@ -1,0 +1,1 @@
+print(str(1.0), str([1, "a"]), str(none), str(true))

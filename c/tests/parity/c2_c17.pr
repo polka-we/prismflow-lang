@@ -1,0 +1,4 @@
+e = error("плохо")
+print(e, type(e))
+r = e ?? "запас"
+print(r)

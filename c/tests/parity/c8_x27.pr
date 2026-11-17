@@ -1,0 +1,2 @@
+d = [1].expand(n -> range(n, n + 2) where _ < 4 and _ > n)
+print(d.to_list())

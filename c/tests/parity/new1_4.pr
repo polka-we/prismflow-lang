@@ -1,0 +1,1 @@
+print("ab".repeat(2), "5".pad_left(3, "0"), "x".pad_right(3, "."), "я".pad_left(3))

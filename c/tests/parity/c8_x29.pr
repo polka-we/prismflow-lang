@@ -1,0 +1,1 @@
+print([1].expand(n -> [n + 1] where _ < 4))

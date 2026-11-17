@@ -1,0 +1,9 @@
+fizz_buzz n = is n % 15 == 0 -> "FizzBuzz"
+               is n % 3 == 0 -> "Fizz"
+               is n % 5 == 0 -> "Buzz"
+               else -> n
+range(1, 21).map(fizz_buzz)::print
+
+is_prime n = is n < 2 -> false
+             else -> not range(2, n).any(n % _ == 0)
+print(range(100).filter(is_prime).to_list())

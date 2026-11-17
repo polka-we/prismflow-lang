@@ -1,0 +1,8 @@
+xs = [1, 2]
+ys = [10, 20]
+print(xs.map(ys.map(1_ + _)))
+print(xs.map(ys.map(_ + 1_)))
+print(xs.map(xs.map(xs.map(1_ * 100 + 2_ * 10 + _))))
+m = [[1, 2], [3, 4]]
+print(m.map(_.map(_ * 2)))
+print(m.map(_.map(1_.len() + _)))

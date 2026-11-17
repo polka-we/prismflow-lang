@@ -1,0 +1,29 @@
+fs := []
+range(5) :: i ->
+    fs += (x -> x + i)
+print(fs.map(f -> f(10)))
+tot := 0
+range(4) :: i ->
+    range(3) :: j ->
+        k = i * j
+        tot := tot + k
+print(tot)
+g n =
+    r := []
+    range(n) :: i ->
+        t = [i, i * i]
+        r += t
+    return r
+print(g(4))
+s = range(6).map(x -> x * x).filter(x -> x % 2 == 0)
+print(s)
+h = x -> range(3).map(y -> x + y)
+print(h(10), h(20))
+nest = range(3).map(a -> range(3).map(b -> a * b))
+print(nest)
+z := 0
+range(3) :: i ->
+    q = i + 1
+    q2 = q * 2
+    z := z + q2
+print(z)

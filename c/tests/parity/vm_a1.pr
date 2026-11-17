@@ -1,0 +1,35 @@
+fib n =
+    is n < 2 -> n
+    else -> fib(n - 1) + fib(n - 2)
+print(fib(20))
+print(fib(2.5))
+sq x = x * x
+print(sq(12), sq(1.5), sq(3000000000), sq(99999999999))
+f x y = x * 2 + y / 4
+print(f(3, 8), f(2.5, 1))
+g a = is a > 10 -> "big" else -> "small"
+print(g(11), g(3))
+h a =
+    is a == 1 -> "one"
+    else -> "other"
+print(h(1), h(2))
+k x = x % 7 == 3
+print(k(10), k(11))
+cat a b = a + b
+print(cat("ab", "cd"), cat([1], [2]))
+two = 2
+adds x = x + two
+print(adds(5))
+fact n =
+    is n < 2 -> 1
+    else -> n * fact(n - 1)
+print(fact(20), fact(25))
+nn x =
+    return
+print(nn(1))
+lastv x =
+    y = 5
+    x
+print(lastv(3))
+sw a b = is a < b -> a else -> b
+print(sw(2, 1), sw("a", "b"))

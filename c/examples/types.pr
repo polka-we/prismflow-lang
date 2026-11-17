@@ -1,0 +1,46 @@
+// тип: имя и поля (можно значения по умолчанию)
+type Point [x, y]
+type User [name, age = 18]
+
+p = Point(1, 2)
+print(p, type(p), p is Point)
+print(User("Kirill"), User("Alena", 19))
+
+// метод - обычная функция; тип первого параметра выбирает случай
+type Circle [r]
+type Rect [w, h]
+area(Circle c) = 3 * c.r ** 2
+area(Rect [w:, h:]) = w * h
+print(area(Circle(2)), area(Rect(3, 4)))
+print([Circle(1), Rect(2, 5)].map(area))
+
+// вызов через точку: p.f(a) - то же, что f(p, a)
+dist(Point a, Point b) = (a.x - b.x) ** 2 + (a.y - b.y) ** 2
+print(p.dist(Point(4, 6)))
+
+// методы для встроенных типов
+double n = n * 2
+shout s = s.upper() + "!"
+print(5.double(), "привет".shout())
+
+// match по типу
+describe v = v match
+    is Point -> "точка"
+    is Circle -> "круг"
+    is int -> "целое"
+    else -> "что-то"
+print(describe(p), describe(Circle(1)), describe(3), describe("s"))
+
+// менять на месте можно только объект из := ; константу функция менять не может
+move(Point p, dx, dy) =
+    p.x += dx
+    p.y += dy
+q := Point(0, 0)
+q.move(2, 3)
+print(q)
+// p.move(1, 1)   // ошибка: p - константа (объявлена через =)
+
+// новая копия вместо изменения
+c := p.copy()
+c.x := 100
+print(p, c)

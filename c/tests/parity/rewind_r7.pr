@@ -1,0 +1,10 @@
+s := []
+range(8) :: i ->
+    st = range(5).map(_ * i)
+    s += st
+print(s)
+last := none
+range(6) :: i ->
+    q = [id: i, tags: ["a" + i.to_string()]]
+    last := q
+print(last)

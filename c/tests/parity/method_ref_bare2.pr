@@ -1,0 +1,8 @@
+up xs = xs.map(upper).to_list()
+print(up(["a", "b"]))
+g s = split(s)
+print(g("p q"))
+words = "to be or not".split(" ")
+print(words.map(len).to_list(), words.map(upper).join("-"))
+range(2):: i
+    print(["x y"].map(split).to_list())

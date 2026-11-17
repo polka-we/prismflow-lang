@@ -1,0 +1,7 @@
+lib = from("mod_lib")
+print(lib.greet("Kirill"))
+print(lib.square(7))
+print(lib.pi)
+print(lib._hidden)
+print(from("mod_lib.prism").square(3))
+r = from("nope") 

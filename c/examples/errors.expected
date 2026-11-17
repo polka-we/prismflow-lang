@@ -1,0 +1,6 @@
+error("division by zero")
+по умолчанию
+число 12
+пропуск: "abc" is not a valid int
+число 7
+не найдено

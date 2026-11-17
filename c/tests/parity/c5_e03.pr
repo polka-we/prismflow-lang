@@ -1,0 +1,6 @@
+f() =
+    time.wait(1)
+    [1, 2][9].x
+t = f()
+print("ok")
+print((await t) ?? "ошибка перехвачена")

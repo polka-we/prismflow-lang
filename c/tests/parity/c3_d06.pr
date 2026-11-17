@@ -1,0 +1,3 @@
+f(x) = x + 1
+print([1, 2, 3].map(f))
+print(range(3).map(f).to_list())

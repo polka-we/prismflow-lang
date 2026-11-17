@@ -1,0 +1,8 @@
+res := []
+range(5) :: i ->
+    tmp := []
+    range(4) :: j ->
+        t2 = [i, j]
+        tmp += t2
+    res += [tmp]
+print(res)

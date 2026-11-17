@@ -1,0 +1,9 @@
+// Filter and transform with words. `.age` means `_.age`, `_` is a hole (an implicit parameter).
+users = [
+    [name: "Anna", age: 20]
+    [name: "Boris", age: 15]
+    [name: "Vera", age: 31]
+]
+users where .age > 17 select .name :: print      // Anna, Vera
+print(users.map(_.age).avg())                   // 22
+print(users.sort(-_.age).map(_.name))           // ["Vera", "Anna", "Boris"]

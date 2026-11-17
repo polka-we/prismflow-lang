@@ -1,0 +1,20 @@
+users = [
+    [name: "Аня", age: 20]
+    [name: "Боря", age: 15]
+    [name: "Вера", age: 31]
+]
+
+// where - фильтр, select - преобразование; ведущая .имя = _.имя
+users where .age > 17 select .name :: print
+
+adults = users where _.age > 17
+print(adults.len())
+
+// цепочку можно переносить
+names = users
+    where .age > 17
+    select .name.upper()
+print(names)
+
+// то же методами
+print(users.filter(_.age > 17).map(_.name))

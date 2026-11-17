@@ -1,0 +1,2 @@
+nat = _ + 1
+print(nat.from(1).take(5).to_list())

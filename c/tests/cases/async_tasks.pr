@@ -1,0 +1,14 @@
+w n =
+    time.wait(10 * n)
+    print("w", n)
+    return n * 2
+bad n =
+    time.wait(5)
+    x = [1][5].foo
+    return 1
+rs = await [1, 2, 3, 4, 5].map(w)
+print(rs)
+t = bad(1)
+print("после запуска bad")
+r = (await t) ?? 77
+print(r)

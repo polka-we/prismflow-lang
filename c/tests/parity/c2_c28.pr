@@ -1,0 +1,4 @@
+print(1 / 0)
+print(2 ** 100)
+print(10 ** 20 + 1)
+print(2 ** 64 div 3)

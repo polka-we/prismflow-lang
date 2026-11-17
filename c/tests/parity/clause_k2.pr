@@ -1,0 +1,4 @@
+fact 0 = 1
+fact none = fact(0)
+fact = _ * fact(_ - 1)
+print(fact(9))

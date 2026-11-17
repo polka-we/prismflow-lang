@@ -1,0 +1,10 @@
+w := 0
+range(5):: w += `{_}x`.len
+print(w)
+print(range(3) select `<{_}>`)
+print(range(3) select `<{_ * 2}-{_ + 1}>`)
+range(2)::
+    print(`i={_}`)
+f = `{_1}:{_2}`
+print(f(1, 2))
+print(`plain {1 + 1} \{x\}`)

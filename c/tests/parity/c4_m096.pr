@@ -1,0 +1,1 @@
+print(range(5).reduce(0, _ + _))

@@ -1,0 +1,16 @@
+x = 0
+l = "{x} = 0"
+print(l)                 // {x} = 0
+print(l.interpret())     // 0 = 0
+print("\{x\} = 0".interpret())   // {x} = 0
+
+// обратные кавычки: подстановка сразу (то же, что "...".interpret())
+name = "Alena"
+age = 19
+print(`{name} - {age + 1} через год`)
+print(`{range(4).map(_ * _).to_list()}`)
+
+// многострочная строка
+text = """первая
+вторая"""
+print(text.lines())

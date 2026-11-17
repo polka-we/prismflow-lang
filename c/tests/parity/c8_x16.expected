@@ -1,0 +1,1 @@
+RuntimeError (line 1): .pop requires an array stored in a variable

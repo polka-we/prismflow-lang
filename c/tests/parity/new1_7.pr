@@ -1,0 +1,1 @@
+print(range(1, 5).scan(0, _1 + _2).to_list(), range(1, 5).scan(_1 + _2).to_list())

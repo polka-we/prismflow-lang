@@ -1,0 +1,2 @@
+конец
+RuntimeError (line 3): cannot add int and none

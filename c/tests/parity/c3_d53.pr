@@ -1,0 +1,5 @@
+a = [1, 2]
+f(x) =
+    x.push(3)
+    x
+print(f(a), a)

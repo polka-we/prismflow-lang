@@ -1,0 +1,5 @@
+Point = type [x, y]
+pt = Point(1, 2)
+print(pt, type(pt), pt is Point)
+dist(p: Point) = sqrt(p.x ** 2 + p.y ** 2)
+print(pt.dist())

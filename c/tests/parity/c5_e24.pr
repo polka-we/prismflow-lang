@@ -1,0 +1,3 @@
+a = request.line()
+b = request.line()
+print(a, b, request.line())

@@ -1,0 +1,2 @@
+s = "Hello, World"
+print(s.lower(), s.replace("l", "L"), s.starts("He"), s.ends("d"), s.contains("lo"), s.trim())

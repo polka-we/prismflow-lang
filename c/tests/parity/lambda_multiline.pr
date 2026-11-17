@@ -1,0 +1,25 @@
+xs = [1,2,3].map(x ->
+    y = x * 2
+    return y + 1
+)
+print(xs)
+r = [1,2,3].map(x ->
+    y = x * 2
+    y + 1)
+print(r)
+q = range(6).map(x ->
+    is x % 2 == 0 ->
+        return "even"
+    else ->
+        return "odd"
+).filter(s -> s == "odd").len()
+print(q)
+t = [1,2,3].map(x ->
+    ys = [1,2].map(y ->
+        z = y * x
+        z + 1)
+    ys.sum()
+)
+print(t)
+f = (a, b) -> a + b
+print(f(1, 2))

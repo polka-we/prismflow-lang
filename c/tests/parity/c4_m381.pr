@@ -1,0 +1,1 @@
+print("ab" in "cabd", "z" in [a: 1], "a" in [a: 1])

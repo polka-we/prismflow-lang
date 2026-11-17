@@ -1,0 +1,1 @@
+RuntimeError (line 3): "k" is a mutable variable of an outer scope

@@ -1,0 +1,23 @@
+print(lcm(4, 6), factorial(5), comb(5, 2), bit_count(255), prod([1, 2, 3, 4]))
+print(isqrt(99), isqrt(100), isqrt(10 ** 30), isqrt(0), isqrt(1), isqrt(-4) is error)
+ys = [1, 3, 3, 5, 7]
+print(bisect_left(ys, 3), bisect_right(ys, 3), partition_point(ys, x -> x < 4))
+h := []
+[5, 3, 8, 1, 9, 2].to_list():: x
+    heap_push(h, x)
+out := []
+range(6):: _i
+    out += heap_pop(h)
+print(out, heap_pop(h) is error)
+q := []
+heap_push(q, [2, "b"])
+heap_push(q, [1, "z"])
+heap_push(q, [1, "a"])
+print(heap_pop(q), heap_peek(q))
+print([1, 2, 3, 4].window(2).to_list(), [1, 2, 3, 4, 5].chunk(2).to_list())
+print(transpose([[1, 2, 3], [4, 5, 6]]), rotate([1, 2, 3, 4], 1))
+print(product([1, 2], ["a", "b"]))
+print(combinations([1, 2, 3, 4], 2))
+print(permutations([1, 2, 3]))
+print(range(1, 100).until(x -> x * x > 50).to_list())
+print(unfold(s -> is s > 50 -> none else -> [s, s * 2], 1).to_list(), iterate(x -> x * 3, 1).take(4).to_list())

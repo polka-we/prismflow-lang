@@ -1,0 +1,26 @@
+// массив: [1, 2, 3]; объект: [ключ: значение]; пустые: [] и [:]
+nums = [1, 2, 3]
+user = [name: "Аня", age: 20, tags: ["a", "b"]]
+empty = [:]
+print(nums, user, empty, [])
+print(user.name, user.tags[1], nums[0])
+
+// изменяемые - только через :=
+u := [name: "Боря"]
+u.age := 30          // поле добавляется на лету
+u.name := "Борис"
+print(u)
+
+// распаковка: [имя:, имя:] для объекта, [a, b, ...rest] для массива
+[age:, name:] = user
+print(name, age)
+[first, ...rest] = nums
+print(first, rest)
+[age: years] = user       // переименовать при распаковке
+print(years)
+
+// раскрытие
+print([...nums, 4], [...user, age: 21])
+
+// проверка структуры
+print("age" in user, 2 in nums)

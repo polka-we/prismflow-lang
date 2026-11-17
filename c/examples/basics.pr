@@ -1,0 +1,30 @@
+// переменные: = константа, := изменяемая
+x = 0
+y = "Hello"
+print(x + y) // 0Hello
+
+// объект - именованный массив: [ключ: значение]
+p = [age: 18, name: "Kirill"]
+
+// схема: массивы -> объекты
+a = [
+    [18, "Kirill"]
+    [19, "Alena"]
+] as [age, name]
+
+b = [
+    [1.99, "Yogurt"]
+    [0.99, "Bread"]
+]
+b2 = b as [price, name]
+
+print(p.age)        // 18
+print(a[0].age)     // 18
+print(b2[1].name)   // Bread
+print(a)
+
+// _ - параметр безымянной функции
+adults = a.filter(_.age > 18)
+print(adults)
+print(a.find(_.name == "Kirill"))
+print(a.any(_.age > 18))

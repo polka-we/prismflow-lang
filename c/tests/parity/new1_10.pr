@@ -1,0 +1,1 @@
+print([1, 2].cycle().take(5).to_list(), [1, 2].repeat(2).to_list(), [].cycle().take(3).to_list(), [1].repeat(0).to_list())

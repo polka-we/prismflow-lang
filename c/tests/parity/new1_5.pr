@@ -1,0 +1,1 @@
+print(round(3.14159, 2), round(2.5, 0), round(-2.5, 0), round(7, 2), round(0.125, 2), round(1.005, 2), round(-0.0, 1))

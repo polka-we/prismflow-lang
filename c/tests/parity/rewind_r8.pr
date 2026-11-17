@@ -1,0 +1,12 @@
+big := []
+range(20) :: i ->
+    parts = ["a" + i.to_string(), "b", "c", "d", "e", "f" + i.to_string()]
+    if_keep = i % 5 == 0
+    big.insert(0, parts[5])
+print(big.len(), big[0], big[19])
+m := [x: 0]
+range(40) :: i ->
+    d = [a: i, b: "z" + i.to_string()]
+    m.x := m.x + d.a
+    m.s := d.b
+print(m)

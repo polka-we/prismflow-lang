@@ -1,0 +1,12 @@
+[a: 1, b: [1, 2.5, [c: "x\né"]], t: true, n: none, big: 123456789012345678901234567890]
+x
+é 123456789012345678901234567890 int float
+{"a":1,"b":[1,2.5,{"c":"x\né"}],"t":true,"n":null,"big":123456789012345678901234567890}
+true
+{"a":1,"b":[1,2.5,"q\"x\t"],"c":null,"d":true}
+error("invalid JSON at position 1: expected string key")
+error("invalid JSON at position 5: expected ',' or ']'")
+error("invalid JSON at position 4: extra data after value")
+error("invalid JSON at position 0: unexpected end")
+error("json_str: cannot encode error")
+[0.1, 2.25]

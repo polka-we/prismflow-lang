@@ -1,0 +1,3 @@
+c = range(1).expand(n -> [n + 1, n + 2] where _ < 6)
+print(c.to_list())
+print(c.take(3).to_list())

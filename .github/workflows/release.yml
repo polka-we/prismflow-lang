@@ -1,0 +1,28 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: make -C c
+      - name: Package
+        run: |
+          V=${GITHUB_REF_NAME#v}
+          git archive --format=zip     --prefix=prismflow-$V/ -o prismflow-$V.zip     HEAD
+          git archive --format=tar.gz  --prefix=prismflow-$V/ -o prismflow-$V.tar.gz  HEAD
+          cp c/prism prismflow-$V-linux-x86_64
+          cp docs/index.html prismflow-$V-playground.html
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            prismflow-*.zip
+            prismflow-*.tar.gz
+            prismflow-*-linux-x86_64
+            prismflow-*-playground.html

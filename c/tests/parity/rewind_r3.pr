@@ -1,0 +1,4 @@
+fs := []
+range(10) :: i ->
+    fs += (x -> x + i)
+print(fs.map(f -> f(100)))

@@ -1,0 +1,7 @@
+[["a", "b"], ["c", "d", "e"]]
+["AB", "CD"]
+["x", "y"] Q 2
+[[1, 2, 3], [8, 9]]
+["a"]
+["mine"]
+RuntimeError (line 8): undefined variable "nosuchthing"

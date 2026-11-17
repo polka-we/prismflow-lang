@@ -1,0 +1,6 @@
+grid := [[0, 0], [0, 0]]
+range(2) :: i ->
+    range(2) :: j ->
+        row = [i, j, "c" + j.to_string()]
+        grid[i][j] := row
+print(grid)

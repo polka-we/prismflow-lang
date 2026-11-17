@@ -1,0 +1,2 @@
+r = range(10).where(_ % 2 == 0).select(_ * 3)
+print(r.to_list())

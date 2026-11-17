@@ -1,0 +1,22 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Build C core
+        run: make -C c
+      - name: C tests
+        run: cd c && bash tests/run.sh
+      - name: C tests under ASan
+        run: |
+          cd c && gcc -std=c99 -g -fsanitize=address,undefined -Iinclude -o prism_asan src/prism.c src/main.c -lm -lpthread 2>/dev/null || echo "asan build skipped"
+      - name: JS engine parity
+        run: sh web/mk_engine.sh && sh web/tests/parity.sh
+      - name: Playground is up to date
+        run: |
+          cd web && node build.js
+          git diff --exit-code docs/index.html

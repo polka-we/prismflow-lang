@@ -1,0 +1,36 @@
+total := 0
+add x =
+    total += x
+    total
+print(add(3), add(4), total)
+cnt := 10
+dec n =
+    n := n - 1
+    cnt := cnt + n
+    n
+print(dec(5), cnt)
+loc x =
+    y = x * 2
+    z = y + 1
+    z
+print(loc(4))
+lastasg x =
+    y = x + 1
+print(lastasg(3))
+lastasg2 x =
+    x := x + 5
+print(lastasg2(3))
+big := 9223372036854775807
+inc x =
+    big += x
+print(inc(1))
+s := "a"
+ap x =
+    s += x
+    s
+print(ap("b"), ap("c"))
+arr := [1]
+pu x =
+    arr += x
+    arr.len()
+print(pu(2), arr)

@@ -1,0 +1,1 @@
+print([3, 1, 2].min_by(-_), [3, 1, 2].max_by(_), [].min_by(_), ["bb", "a"].min_by(len))

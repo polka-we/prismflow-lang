@@ -1,0 +1,2 @@
+9
+RuntimeError (line 3): array has no method .index

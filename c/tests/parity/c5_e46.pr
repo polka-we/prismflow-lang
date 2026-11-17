@@ -1,0 +1,2 @@
+Point = type [x, y]
+print(Point(1, 2).x, Point(x: 1, y: 2))

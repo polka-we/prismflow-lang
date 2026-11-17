@@ -1,0 +1,9 @@
+f n =
+    a = n + 1
+    range(a).map(x -> x * 2)
+print(f(3).to_list())
+g n = range(n).map(x -> x * 2)
+print(g(3).to_list())
+h n =
+    range(n).map(x -> x * 2)
+print(h(3).to_list())

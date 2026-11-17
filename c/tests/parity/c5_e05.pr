@@ -1,0 +1,2 @@
+t = time.test()
+print(type(t))

@@ -1,0 +1,5 @@
+r = range(1000).par().map(x -> x * 0.5d).sum()
+print(r)
+precision(20)
+q = range(10).par().map(x -> x / 3).sum()
+print(q)

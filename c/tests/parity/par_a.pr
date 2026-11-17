@@ -1,0 +1,6 @@
+fib 0 = 0
+fib 1 = 1
+fib n = fib(n - 1) + fib(n - 2)
+range(12) ::par n
+    print(n, fib(20 + n % 4), "x" * 3)
+print("done")

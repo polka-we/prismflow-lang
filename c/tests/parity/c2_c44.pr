@@ -1,0 +1,5 @@
+f(x) =
+    x is
+        1 -> "a"
+        else -> "b"
+print(f(1), f(2))

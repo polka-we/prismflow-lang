@@ -1,0 +1,2 @@
+start 0
+RuntimeError (line 7): cannot add int and none

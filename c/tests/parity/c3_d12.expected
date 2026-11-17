@@ -1,0 +1,7 @@
+int 1
+string a
+none none
+bool true
+float 1.5
+array [1]
+object [k: 1]

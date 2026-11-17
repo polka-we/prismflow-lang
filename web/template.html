@@ -1,0 +1,868 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}html[lang="en"] .lang-ru, html[lang="ru"] .lang-en { display: none; }
+#gh { font-size: 13px; text-decoration: none; padding: 0 6px; align-self: center; color: inherit; opacity: .8; }
+#gh:hover { opacity: 1; text-decoration: underline; }
+</style></head><body>
+<title>Prismflow Playground</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Onest:wght@400;500;600;700&display=swap&subset=cyrillic">
+<style>
+/* Раскладка: шапка со спектральной линией, слева редактор с вкладками-файлами, справа вывод и ввод, снизу справка. */
+:root {
+  --bg: #f4f5fa;
+  --surface: #ffffff;
+  --surface-2: #eceef6;
+  --ink: #161a2b;
+  --muted: #5c6280;
+  --line: #d9dcea;
+  --accent: #3454d1;
+  --accent-ink: #ffffff;
+  --err: #b4234f;
+  --err-bg: #fbe9ef;
+  --ok: #23783a;
+  --code-bg: #fbfbfe;
+  --font-ui: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-code: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --spectrum: linear-gradient(90deg, #ff4d6d, #ff9f1c, #ffe14d, #4cd964, #2ec4f1, #5b6cff, #a855f7);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d0f19; --surface: #151829; --surface-2: #1d2136; --ink: #e8eaf5; --muted: #99a0bd; --line: #292e47;
+    --accent: #8ea4ff; --accent-ink: #0d0f19; --err: #ff8aa8; --err-bg: #3a1a27; --ok: #6fd18a; --code-bg: #111423;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d0f19; --surface: #151829; --surface-2: #1d2136; --ink: #e8eaf5; --muted: #99a0bd; --line: #292e47;
+  --accent: #8ea4ff; --accent-ink: #0d0f19; --err: #ff8aa8; --err-bg: #3a1a27; --ok: #6fd18a; --code-bg: #111423;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 28px;
+}
+.wrap { max-width: 1280px; margin: 0 auto; }
+.spectrum { height: 4px; background: var(--spectrum); margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px))); }
+header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding-block: 16px; }
+.brand { display: flex; align-items: center; gap: 10px; margin-right: auto; min-width: 0; }
+.brand svg { width: 30px; height: 30px; flex: none; }
+.brand h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 0; line-height: 1.1; }
+.brand p { margin: 0; color: var(--muted); font-size: 13px; }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+button, select, input, textarea { font: inherit; color: inherit; }
+button, select { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 8px 12px; cursor: pointer; line-height: 1.2; }
+button:hover, select:hover { border-color: var(--accent); }
+button:focus-visible, select:focus-visible, textarea:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.run { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; padding: 8px 18px; }
+.run:hover { filter: brightness(1.08); }
+.run[disabled] { opacity: .55; cursor: default; }
+.stop { color: var(--err); }
+.stop[hidden] { display: none; }
+kbd { font-family: var(--font-code); font-size: 11px; opacity: .8; margin-left: 6px; }
+.grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 900px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; min-width: 0; overflow: hidden; }
+.panel + .panel { margin-top: 16px; }
+.col { min-width: 0; }
+.panel-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 10px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+.panel-title { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; }
+.tab { padding: 5px 10px; font-family: var(--font-code); font-size: 13px; border-radius: 6px; background: transparent; border-color: transparent; }
+.tab[aria-selected="true"] { background: var(--surface); border-color: var(--line); color: var(--accent); font-weight: 500; }
+.tab.add { color: var(--muted); }
+.filebar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-left: auto; font-size: 13px; color: var(--muted); }
+.filebar input { font-family: var(--font-code); font-size: 13px; width: 130px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+.filebar input[disabled] { opacity: .6; }
+.filebar button { padding: 4px 8px; font-size: 13px; }
+.editor { display: flex; height: 460px; background: var(--code-bg); }
+.gutter { flex: none; width: 44px; overflow: hidden; text-align: right; padding: 12px 8px 12px 0; font-family: var(--font-code); font-size: 13px; line-height: 20px; color: var(--muted); background: var(--surface-2); border-right: 1px solid var(--line); user-select: none; }
+.gutter div { height: 20px; padding-right: 2px; }
+.gutter div.bad { color: var(--err); font-weight: 700; background: var(--err-bg); }
+#code { flex: 1; min-width: 0; border: 0; resize: none; background: transparent; padding: 12px; font-family: var(--font-code); font-size: 13px; line-height: 20px; tab-size: 4; white-space: pre; overflow: auto; outline-offset: -2px; }
+.out-head .status { margin-left: auto; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.status.ok { color: var(--ok); }
+.status.bad { color: var(--err); }
+#out { margin: 0; padding: 12px; min-height: 220px; max-height: 340px; overflow: auto; font-family: var(--font-code); font-size: 13px; line-height: 20px; white-space: pre-wrap; word-break: break-word; background: var(--code-bg); }
+#out .err { display: block; margin-top: 6px; padding: 8px 10px; border-left: 3px solid var(--err); background: var(--err-bg); color: var(--err); border-radius: 0 6px 6px 0; font-family: var(--font-ui); font-size: 14px; white-space: normal; }
+#out .echo { color: var(--accent); }
+.inrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 10px; border-top: 1px solid var(--line); background: var(--surface-2); }
+.inrow .prompt { font-family: var(--font-code); color: var(--accent); font-weight: 700; }
+.inrow input { flex: 1 1 160px; min-width: 0; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); font-family: var(--font-code); font-size: 13px; }
+.inrow button { padding: 7px 12px; font-size: 13px; }
+#out .hint { color: var(--muted); font-family: var(--font-ui); }
+#stdin { display: block; width: 100%; height: 110px; border: 0; resize: vertical; padding: 12px; background: var(--code-bg); font-family: var(--font-code); font-size: 13px; line-height: 20px; }
+.note { margin: 0; padding: 8px 12px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); }
+details.ref { margin-top: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+details.ref summary { cursor: pointer; padding: 12px 16px; font-weight: 600; }
+.ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; padding: 4px 16px 16px; }
+.ref-grid section { min-width: 0; }
+.ref-grid h3 { margin: 0 0 6px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.ref-grid pre { margin: 0; padding: 10px 12px; background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px; font-family: var(--font-code); font-size: 12.5px; line-height: 1.55; overflow-x: auto; }
+.ref-grid p { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) { button, select { transition: border-color .12s, filter .12s; } }
+</style>
+
+<div class="spectrum" aria-hidden="true"></div>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <polygon points="16,3 29,27 3,27" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <line x1="1" y1="17" x2="11" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <g stroke-width="2.4" stroke-linecap="round">
+          <line x1="20" y1="15" x2="31" y2="9" stroke="#ff4d6d"/><line x1="21" y1="18" x2="31" y2="15" stroke="#ffb020"/>
+          <line x1="22" y1="21" x2="31" y2="21" stroke="#4cd964"/><line x1="23" y1="24" x2="31" y2="27" stroke="#5b6cff"/>
+        </g>
+      </svg>
+      <div><h1>Prismflow</h1><p data-i18n="sub">Язык потоков данных вместо for, while и if</p></div>
+    </div>
+    <div class="tools">
+      <label for="examples" class="panel-title" data-i18n="examples">Примеры</label>
+      <select id="examples" aria-label="Примеры программ" data-i18n-aria="examplesAria"></select>
+      <button id="run" class="run" type="button"><span data-i18n="run">Запустить</span><kbd>Ctrl+Enter</kbd></button>
+      <button id="stop" class="stop" type="button" data-i18n="stop" hidden>Стоп</button>
+      <button id="theme" type="button" data-i18n-aria="themeAria" aria-label="Сменить тему">Тема</button>
+      <button id="lang" type="button" aria-label="Language">RU</button>
+      <a id="gh" class="ghlink" href="https://github.com/polka-we/prismflow" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div class="col">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="tabs" id="tabs" role="tablist" aria-label="Файлы" data-i18n-aria="filesAria"></div>
+          <div class="filebar">
+            <label for="fname" data-i18n="file">Файл</label>
+            <input id="fname" type="text" spellcheck="false" autocomplete="off">
+            <button id="delfile" type="button" data-i18n="del">Удалить</button>
+          </div>
+        </div>
+        <div class="editor">
+          <div class="gutter" id="gutter" aria-hidden="true"></div>
+          <textarea id="code" spellcheck="false" wrap="off" aria-label="Код программы" data-i18n-aria="codeAria"></textarea>
+        </div>
+        <p class="note" data-i18n="noteFiles" data-i18n-html="1">Дополнительные файлы подключаются так: <code>lib = from("имя_файла")</code></p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="panel">
+        <div class="panel-head out-head"><span class="panel-title" data-i18n="out">Вывод</span><span id="status" class="status"></span></div>
+        <pre id="out" aria-live="polite"></pre>
+        <form id="inrow" class="inrow" hidden>
+          <span class="prompt" aria-hidden="true">›</span>
+          <input id="liveline" type="text" autocomplete="off" spellcheck="false" aria-label="Ввод для программы" data-i18n-aria="liveAria" placeholder="Программа ждёт ввод: введите строку и нажмите Enter" data-i18n-ph="livePh">
+          <button type="submit" data-i18n="send">Отправить</button>
+          <button type="button" id="eof"><span data-i18n="eof">Конец ввода</span><kbd>Ctrl+D</kbd></button>
+        </form>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><label for="stdin" class="panel-title" data-i18n="stdinLabel">Заготовленный ввод (необязательно)</label></div>
+        <textarea id="stdin" spellcheck="false" placeholder="Одна строка ввода на строку" data-i18n-ph="stdinPh"></textarea>
+        <p class="note" data-i18n="stdinNote">Если поле пустое, программа сама ждёт ввод в окне вывода, как в консоли. Конец ввода: кнопка или Ctrl+D.</p>
+      </div>
+    </div>
+  </div>
+
+  <details class="ref">
+    <summary data-i18n="ref">Справка по языку</summary>
+    <div class="ref-grid lang-ru">
+      <section><h3>Переменные</h3><pre>x = 5        // константа
+y := 5       // изменяемая
+y += 1       // только для :=
+arr += 6     // добавить в конец
+arr -= 2     // убрать 2 с конца
+arr - 1      // новый массив без последнего
+arr + 9      // новый массив с 9 в конце
+arr.remove(0) // убрать по индексу
+arr.pop()     // убрать и вернуть последний
+arr.pop(1)    // убрать и вернуть по индексу
+b := arr.copy() // независимая копия
+c := arr.dcopy() // глубокая копия
+d := arr        // ссылка: оба имени меняют один массив</pre><p>Блоки пишутся <b>отступами</b>, фигурных скобок в языке нет. Типы: int, float, string, bool, none, массив, объект, error. Массивы и объекты передаются по ссылке; <code>b = a</code> для изменяемого <code>a</code> — ошибка: пишите <code>b := a</code> или <code>b = a.copy()</code>.</p></section>
+      <section><h3>Числа</h3><pre>5       // int (любой размер)
+5.0     // float
+7 / 2   // 3.5: / всегда float
+div(7, 2) // 3: целое деление
+int(3.9) float(2) "12".to_int()
+"1.5".to_float()
+a[2.0]  // ошибка: индекс — int</pre><p><code>is number</code> подходит обоим типам, <code>is int</code> и <code>is float</code> — каждому.</p></section>
+      <section><h3>is-выражение и when</h3><pre>s = is n &gt; 9 -&gt; "много" else -&gt; "мало"
+g = is n &gt; 90 -&gt; "A"
+    is n &gt; 80 -&gt; "B"
+    else -&gt; "C"
+is ready -&gt; start()      // else можно опустить
+job = print:("готово")   // отложенный вызов
+job()
+print:(a[i]) when i &lt; n  // колбэк без аргументов</pre><p>Строки <code>is</code> подряд — одна цепочка: срабатывает первая подходящая. Аргументы <code>f:(…)</code> вычисляются сразу, но при <code>when</code> — только если условие истинно.</p></section>
+      <section><h3>Поток управления без while</h3><pre>range(10)::i
+    is i % 2 == 0 -&gt; next   // пропустить элемент
+    is i &gt; 7 -&gt; stop        // закончить цикл
+    print(i)
+find x =                    // ранний return
+    xs::y
+        is y &gt; x -&gt; return y
+    none
+queue:: v                   // рабочий список: видит дописанное
+    queue += v + 1
+a, b := b, a                // множественное присваивание</pre><p><code>next</code>/<code>stop</code> работают в телах <code>::</code> и в стадиях <code>map</code>/<code>filter</code>/<code>flat_map</code>. <code>return</code> в ветке <code>is</code>/<code>match</code> выходит из всей функции. Голое имя метода работает как функция: <code>.map(split)</code>.</p></section>
+      <section><h3>Стандартная библиотека</h3><pre>lcm factorial comb prod bit_count isqrt
+until iterate unfold
+bisect_left bisect_right partition_point
+heap_push(h, x) heap_pop(h) heap_peek(h)
+transpose rotate product
+combinations(xs, k) permutations(xs)
+gcd pow(a, b, mod) divmod
+s.remove(i) s.insert(i, t)   // строки: новая строка</pre><p>Библиотека написана на самом Prismflow. Встроенные имена можно перекрыть своей переменной: <code>sum := 0</code> допустимо.</p></section>
+      <section><h3>Схемы</h3><pre>t = [
+  [18, "Kirill"]
+  [19, "Alena"]
+] as [age, name]
+t[0].age   // 18</pre><p>Строки разной длины дают ошибку.</p></section>
+      <section><h3>Функции</h3><pre>sum a b = a + b         // выражение
+sum(a, b) = a + b       // со скобками
+greet name =            // "=" в конце строки и тело с отступом
+    print(name)
+fact 0 = 1              // по случаям
+fact < 0 = none         // условие на аргумент: < > <= >= == != %
+fact n = n * fact(n - 1)
+// общий случай можно записать и через _ : fact = _ * ...
+f([a, b]) = a + b       // шаблон в скобках
+f([age:, name:]) = name // шаблон объекта
+inc = _ + 1             // безымянная: _ , _1 , _2
+twice(_ * 2, 5)         // _ в аргументе вызова
+add(1, _)               // голый _ - частичный вызов</pre><p>Параметры названы в заголовке или это «дырки» <code>_</code>. Одиночный <code>_</code> - один и тот же аргумент, для нескольких <code>_1</code>, <code>_2</code>. В аргументе метода (<code>.map(_ * 2)</code>), в теле <code>::</code> и в правой части <code>x = ...</code> дырки образуют функцию. Лямбда в одну строку: <code>x -> x + 1</code>. Заголовок без параметров: <code>имя =</code> и тело ниже. Если в теле есть <code>_</code>, это функция (<code>k = _</code> называет параметр <code>k</code>), иначе - значение блока. Блочная функция (заголовок кончается на <code>=</code>) возвращает значение последнего выражения в теле либо то, что указано в <code>return</code>; если последняя строка - присваивание, результат <code>none</code>. Старые <code>fn</code> и <code>@имя</code> пока работают.</p></section>
+      <section><h3>Диапазоны и перебор</h3><pre>range(5)::print          // 0..4
+range(1, 10, 3)::print  // 1 4 7
+range(10, 0, -1)        // 10..1
+5 in range(1, 10)       // true
+0 &lt;= x &lt; 10            // цепочка
+s[1..4] s[..3] s[-3..]  // срезы
+arr::i,x -&gt; print(i, x)  // индекс и значение
+obj::k,v -&gt; print(k, v)  // ключ и значение
+users::u -&gt; print(u)     // имя элемента
+users::u                // или строка «::u» и тело с отступом
+    print(u)</pre><p><code>range(начало, конец, шаг)</code>: конец не включается, начало по умолчанию 0. Срез <code>[от..до]</code>: минус считает с конца.</p></section>
+      <section><h3>Типы и методы</h3><pre>type Point [x, y]
+type User [name, age = 18]
+p = Point(1, 2)
+p is Point               // true
+area(Circle c) = 3 * c.r ** 2
+area(Rect [w:, h:]) = w * h
+p.dist(q)                // то же, что dist(p, q)
+5.double()               // метод для int
+move(Point p, d) =
+    p.x += d
+q := Point(0, 0)
+q.move(1)                // можно: q из :=</pre><p>Метод - обычная функция, тип первого параметра выбирает случай. <code>p.f(a)</code> вызывает <code>f(p, a)</code>. Функция меняет массив или объект только если ей передали изменяемую переменную (<code>:=</code>); константа (<code>=</code>) защищена. Копия - <code>.copy()</code>, глубокая - <code>.dcopy()</code>.</p></section>
+      <section><h3>match</h3><pre>x match
+    is % 2 == 0 -> print("чётное")
+    is x > 100 ->
+        print("много")   // ветка-блок
+    is [age: 18] -> print("18")
+    is [a, ...rest] -> print(a)
+    is error -> print("ошибка")
+    else -> none</pre><p><code>else</code> обязателен. Условие должно быть bool.</p></section>
+      <section><h3>Потоки</h3><pre>range(5)::print
+range(1, 6).map(_ * _)
+f.from(1).take(5)
+f.from(1).take_while(_ &lt; 9)
+xs::par x -&gt; ...  // без записи во внешние</pre><p>Поток ленивый. Оператор-выражение выполняет его до конца. Цепочки над массивами идут поэлементно.</p></section>
+      <section><h3>Методы</h3><pre>filter map find any all count
+reduce(0, _1 + _2)  sum avg
+take skip take_while skip_while
+sort(-_.age) sort([_.a, -_.b])  // ключ-массив: по a, затем по b убыв.
+zip flat enumerate
+expand(дети) expand(дети, выход) expand_bfs(дети)  // обход вглубь / вширь
+unique chunk(n) window(n) group_by(f)
+len first last join split lines
+upper lower trim contains
+to_int to_float interpret
+par copy dcopy</pre></section>
+      <section><h3>Массивы и объекты</h3><pre>nums = [1, 2, 3]
+user = [name: "Аня", age: 20]  // объект
+[] [:]                          // пустые: массив, объект
+user.name  nums[0]  user.age := 21
+[age:, name:] = user            // распаковка
+[age: years] = user             // с переименованием
+[first, ...rest] = nums</pre><p>Объект — именованный массив: ключи пишутся через <code>:</code>. Смешивать элементы с ключами и без нельзя.</p></section>
+      <section><h3>where и select</h3><pre>users where .age &gt; 17 select .name :: print
+adults = users where _.age &gt; 17
+names = users
+    where .age &gt; 17
+    select .name</pre><p><code>where</code> — фильтр, <code>select</code> — преобразование. Ведущая <code>.имя</code> значит <code>_.имя</code>, а <code>["имя"]</code> — <code>_["имя"]</code> (то же поле: <code>obj.x</code> и <code>obj["x"]</code> равны). Слова ниже по приоритету, чем <code>and</code>/<code>or</code>; пишутся после выражения, поэтому слева стоит целое выражение. Те же действия: <code>.filter(…)</code> и <code>.map(…)</code>.</p></section>
+      <section><h3>Строки</h3><pre>`{x} + 1 = {x + 1}`   // подстановка
+"""многострочная"""
+"{x}".interpret()     // из переменной
+a ?? "запасное"       // для none/error
+user?.name            // none, если user none
+[...a, 0, ...b]       // раскрытие
+[...old, age: 19]
+s.skip(1) s.take(3) s - 1
+"а б  в".split()</pre></section>
+      <section><h3>Переносы строк</h3><pre>range(10)
+    .filter(i -&gt; i &gt; 3)
+    ::i
+        print(i)</pre><p>Блок открывает строка, которая кончается на <code>=</code> (заголовок функции), <code>-&gt;</code>, <code>::</code> (с именами или без) или <code>match</code>; тело пишется с бо́льшим отступом. Перенос внутри скобок не важен. Продолжением выражения считаются строки, которые начинаются с <code>.</code>, <code>::</code>, <code>where</code>, <code>select</code> или оператора. Старый синтаксис со скобками <code>{}</code>: первая строка <code>// syntax: v1</code>.</p></section>
+      <section><h3>Время и ожидание</h3><pre>time.wait(500)        // пауза в мс: программы или функции
+f() =                 // тело с time.wait ждёт только f
+    time.wait(100)
+job = f()             // вызов вернул задачу сразу
+await job             // дождаться и получить результат
+await [a, b]          // дождаться всех
+time.program()        // мс с начала программы (float)
+time.time()           // местное время устройства
+time.world()          // мировое время UTC+0
+t.year t.month t.day t.hour t.minute t.second t.ms t.unix t.text
+time.test(fn, 100)    // среднее время fn в мс
+time.test(fn)         // один повтор</pre><p><code>await</code> не к задаче возвращает значение как есть. Тело <code>::</code> с <code>time.wait</code> идёт по очереди; <code>xs::имя</code> запускает функцию параллельно для каждого элемента.</p></section>
+      <section><h3>Ввод и модули</h3><pre>name = request.line()
+request.lines().take_while(_ != "stop")
+request.words()  // все слова ввода потоком
+request.ints()   // все целые числа ввода потоком
+lib = from("my_lib")
+lib.square(3)</pre></section>
+    </div>
+    <div class="ref-grid lang-en">
+      <section><h3>Variables</h3><pre>x = 5        // constant
+y := 5       // mutable
+y += 1       // only for :=
+arr += 6     // append
+arr -= 2     // remove 2 from the end
+arr - 1      // new array without the last item
+arr + 9      // new array with 9 appended
+arr.remove(0) // remove by index
+arr.pop()     // remove and return the last
+arr.pop(1)    // remove and return by index
+b := arr.copy() // independent copy
+c := arr.dcopy() // deep copy
+d := arr        // reference: both names change one array</pre><p>Blocks are written with <b>indentation</b>, there are no curly braces. Types: int, float, string, bool, none, array, object, error. Arrays and objects are passed by reference; <code>b = a</code> for a mutable <code>a</code> is an error: write <code>b := a</code> or <code>b = a.copy()</code>.</p></section>
+      <section><h3>Numbers</h3><pre>5       // int (any size)
+5.0     // float
+7 / 2   // 3.5: / is always float
+div(7, 2) // 3: integer division
+int(3.9) float(2) "12".to_int()
+"1.5".to_float()
+0.1d + 0.2d == 0.3d  // exact decimals
+precision(30)        // all fractions exact
+a[2.0]  // error: an index must be int</pre><p><code>is number</code> matches both types, <code>is int</code> and <code>is float</code> match one each.</p></section>
+      <section><h3>is expression and when</h3><pre>s = is n &gt; 9 -&gt; "many" else -&gt; "few"
+g = is n &gt; 90 -&gt; "A"
+    is n &gt; 80 -&gt; "B"
+    else -&gt; "C"
+is ready -&gt; start()      // else may be omitted
+job = print:("done")     // deferred call
+job()
+print:(a[i]) when i &lt; n  // callback without arguments</pre><p>Consecutive <code>is</code> lines form one chain: the first match wins. Arguments of <code>f:(…)</code> are evaluated at once, but with <code>when</code> only if the condition is true.</p></section>
+      <section><h3>Control flow without while</h3><pre>range(10)::i
+    is i % 2 == 0 -&gt; next   // skip this item
+    is i &gt; 7 -&gt; stop        // end the loop
+    print(i)
+find x =                    // early return
+    xs::y
+        is y &gt; x -&gt; return y
+    none
+queue:: v                   // worklist: sees appended items
+    queue += v + 1
+a, b := b, a                // multiple assignment</pre><p><code>next</code>/<code>stop</code> work in <code>::</code> bodies and in <code>map</code>/<code>filter</code>/<code>flat_map</code> stages. <code>return</code> inside an <code>is</code>/<code>match</code> branch leaves the whole function. Bare method names work as functions: <code>.map(split)</code>.</p></section>
+      <section><h3>Schemas</h3><pre>t = [
+  [18, "Kirill"]
+  [19, "Alena"]
+] as [age, name]
+t[0].age   // 18</pre><p>Rows of different length cause an error.</p></section>
+      <section><h3>Functions</h3><pre>sum a b = a + b         // expression
+sum(a, b) = a + b       // with parentheses
+greet name =            // "=" at the end of the line and an indented body
+    print(name)
+fact 0 = 1              // by cases
+fact &lt; 0 = none         // argument condition: &lt; &gt; &lt;= &gt;= == != %
+fact n = n * fact(n - 1)
+// the general case can also use _ : fact = _ * ...
+f([a, b]) = a + b       // pattern in parentheses
+f([age:, name:]) = name // object pattern
+inc = _ + 1             // anonymous: _ , _1 , _2
+twice(_ * 2, 5)         // _ in a call argument
+add(1, _)               // a bare _ is a partial call</pre><p>Parameters are named in the header or are <code>_</code> "holes". A single <code>_</code> is one and the same argument; use <code>_1</code>, <code>_2</code> for several. In a method argument (<code>.map(_ * 2)</code>), in a <code>::</code> body and on the right of <code>x = ...</code> the holes make a function. One-line lambda: <code>x -> x + 1</code>. A header without parameters: <code>name =</code> and a body below. If the body has <code>_</code> it is a function (<code>k = _</code> names the parameter <code>k</code>), otherwise it is a block value. A block function (header ends with <code>=</code>) returns the value of its last expression or what <code>return</code> says; if the last line is an assignment, it returns <code>none</code>.</p></section>
+      <section><h3>Ranges and iteration</h3><pre>range(5)::print          // 0..4
+range(1, 10, 3)::print  // 1 4 7
+range(10, 0, -1)        // 10..1
+5 in range(1, 10)       // true
+0 &lt;= x &lt; 10            // chained comparison
+s[1..4] s[..3] s[-3..]  // slices
+arr::i,x -&gt; print(i, x)  // index and value
+obj::k,v -&gt; print(k, v)  // key and value
+users::u -&gt; print(u)     // name of the item
+users::u                // or a "::u" line and an indented body
+    print(u)</pre><p><code>range(start, end, step)</code>: the end is excluded, start defaults to 0. Slice <code>[from..to]</code>: a minus counts from the end.</p></section>
+      <section><h3>Types and methods</h3><pre>type Point [x, y]
+type User [name, age = 18]
+p = Point(1, 2)
+p is Point               // true
+area(Circle c) = 3 * c.r ** 2
+area(Rect [w:, h:]) = w * h
+p.dist(q)                // same as dist(p, q)
+5.double()               // a method for int
+move(Point p, d) =
+    p.x += d
+q := Point(0, 0)
+q.move(1)                // allowed: q is from :=</pre><p>A method is an ordinary function; the type of the first parameter selects the case. <code>p.f(a)</code> calls <code>f(p, a)</code>. A function changes an array or object only if it is passed a mutable variable (<code>:=</code>); a constant (<code>=</code>) is protected. Copy with <code>.copy()</code>, deep copy with <code>.dcopy()</code>.</p></section>
+      <section><h3>match</h3><pre>x match
+    is % 2 == 0 -&gt; print("even")
+    is x &gt; 100 -&gt;
+        print("big")     // block branch
+    is [age: 18] -&gt; print("18")
+    is [a, ...rest] -&gt; print(a)
+    is error -&gt; print("error")
+    else -&gt; none</pre><p><code>else</code> is required. The condition must be bool.</p></section>
+      <section><h3>Streams</h3><pre>range(5)::print
+range(1, 6).map(_ * _)
+f.from(1).take(5)
+f.from(1).take_while(_ &lt; 9)
+s.until(x -&gt; x &gt; 5)          // up to the first match
+xs::par x -&gt; ...  // no writes to outer variables</pre><p>A stream is lazy. A statement-level stream runs to the end; if the last expression of a block is a stream, it is returned as the block value. Chains over arrays run element by element.</p></section>
+      <section><h3>Methods</h3><pre>filter map find any all count
+reduce(0, _1 + _2)  sum avg
+take skip take_while skip_while
+sort(-_.age) sort([_.a, -_.b])  // array key: by a, then by b descending
+zip flat enumerate
+expand(kids) expand(kids, exit) expand_bfs(kids)  // depth / breadth walk
+unique chunk(n) window(n) group_by(f)
+len first last join split lines
+upper lower trim contains
+remove(i) insert(i, s)  // strings: return a new string
+to_int to_float interpret
+par copy dcopy</pre></section>
+      <section><h3>Standard library</h3><pre>lcm factorial comb prod bit_count isqrt
+until iterate unfold
+bisect_left bisect_right partition_point
+heap_push(h, x) heap_pop(h) heap_peek(h)
+transpose rotate product
+combinations(xs, k) permutations(xs)
+gcd pow(a, b, mod) divmod</pre><p>The library is written in Prismflow itself. Built-in names can be shadowed by your own variable: <code>sum := 0</code> is fine.</p></section>
+      <section><h3>Arrays and objects</h3><pre>nums = [1, 2, 3]
+user = [name: "Anna", age: 20]  // object
+[] [:]                          // empty: array, object
+user.name  nums[0]  user.age := 21
+[age:, name:] = user            // unpacking
+[age: years] = user             // with renaming
+[first, ...rest] = nums</pre><p>An object is a named array: keys are written with <code>:</code>. Mixing items with and without keys is not allowed.</p></section>
+      <section><h3>where and select</h3><pre>users where .age &gt; 17 select .name :: print
+adults = users where _.age &gt; 17
+names = users
+    where .age &gt; 17
+    select .name</pre><p><code>where</code> filters, <code>select</code> transforms. A leading <code>.name</code> means <code>_.name</code>, and <code>["name"]</code> means <code>_["name"]</code> (the same field: <code>obj.x</code> equals <code>obj["x"]</code>). The words bind more loosely than <code>and</code>/<code>or</code>; they follow an expression, so the left side is a whole expression. Same as <code>.filter(…)</code> and <code>.map(…)</code>.</p></section>
+      <section><h3>Strings</h3><pre>`{x} + 1 = {x + 1}`   // interpolation
+"""multi-line"""
+"{x}".interpret()     // from a variable
+a ?? "fallback"       // for none/error
+user?.name            // none if user is none
+[...a, 0, ...b]       // spread
+[...old, age: 19]
+s.skip(1) s.take(3) s - 1
+"a b  c".split()</pre></section>
+      <section><h3>Line breaks</h3><pre>range(10)
+    .filter(i -&gt; i &gt; 3)
+    ::i
+        print(i)</pre><p>A block is opened by a line that ends with <code>=</code> (function header), <code>-&gt;</code>, <code>::</code> (with or without names) or <code>match</code>; the body is indented deeper. Line breaks inside brackets do not matter. Lines that start with <code>.</code>, <code>::</code>, <code>where</code>, <code>select</code> or an operator continue the expression. Old brace syntax: put <code>// syntax: v1</code> on the first line.</p></section>
+      <section><h3>Time and waiting</h3><pre>time.wait(500)        // pause in ms: the program or a function
+f() =                 // a body with time.wait waits only f
+    time.wait(100)
+job = f()             // the call returned a task at once
+await job             // wait and get the result
+await [a, b]          // wait for all
+time.program()        // ms since program start (float)
+time.time()           // the device's local time
+time.world()          // world time UTC+0
+t.year t.month t.day t.hour t.minute t.second t.ms t.unix t.text
+time.test(fn, 100)    // average time of fn in ms
+time.test(fn)         // a single run</pre><p><code>await</code> on a non-task returns the value as is. A <code>::</code> body with <code>time.wait</code> runs in sequence; <code>xs::name</code> starts the function in parallel for each item.</p></section>
+      <section><h3>Input, files, modules</h3><pre>name = request.line()
+request.lines().take_while(_ != "stop")
+request.words()  // all words of the input as a stream
+request.ints()   // all integers of the input as a stream
+lib = from("my_lib")
+lib.square(3)
+file.read("a.txt") http.get(url)  // host must allow it
+text.json() json_str(x)</pre></section>
+    </div>
+  </details>
+</div>
+
+<script type="text/plain" id="engine">/*__ENGINE__*/</script>
+<script>
+/*__EXAMPLES__*/
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var ENGINE = $('engine').textContent;
+  var TIMEOUT_MS = 10000;
+  var state = { files: {}, order: [], current: 'main', stdin: '' };
+  var mine = null, worker = null, timer = null, runId = 0;
+  /* ---------- язык интерфейса ---------- */
+  var T = {
+    en: {
+      sub: 'A language of data streams instead of for, while and if', examples: 'Examples', examplesAria: 'Example programs', run: 'Run', stop: 'Stop',
+      themeAria: 'Change theme', filesAria: 'Files', file: 'File', del: 'Delete', codeAria: 'Program code',
+      noteFiles: 'Extra files are imported like this: <code>lib = from("file_name")</code>', out: 'Output',
+      liveAria: 'Input for the program', livePh: 'The program is waiting for input: type a line and press Enter', send: 'Send', eof: 'End of input',
+      stdinLabel: 'Prepared input (optional)', stdinPh: 'One input line per line',
+      stdinNote: 'If empty, the program waits for input in the output window like in a console. End of input: the button or Ctrl+D.',
+      ref: 'Language reference', mine: 'My code', addFile: '+ file', addFileAria: 'Add file', moduleComment: '// module ',
+      hint: 'Press \u201cRun\u201d to execute the program.', done: 'Done · ', ms: ' ms', error: 'Error', stopped: 'Stopped', waiting: 'Waiting for input…', running: 'Running…',
+      internal: 'Internal error: ', crash: 'execution failure', timeout1: 'The program was stopped by the timeout (', timeout2: ' s, not counting time.wait). Perhaps an infinite stream without take or take_while.',
+      stoppedMsg: 'Execution stopped.', themeAuto: 'Theme: auto', themeLight: 'Theme: light', themeDark: 'Theme: dark', langBtn: 'RU'
+    },
+    ru: {
+      sub: 'Язык потоков данных вместо for, while и if', examples: 'Примеры', examplesAria: 'Примеры программ', run: 'Запустить', stop: 'Стоп',
+      themeAria: 'Сменить тему', filesAria: 'Файлы', file: 'Файл', del: 'Удалить', codeAria: 'Код программы',
+      noteFiles: 'Дополнительные файлы подключаются так: <code>lib = from("имя_файла")</code>', out: 'Вывод',
+      liveAria: 'Ввод для программы', livePh: 'Программа ждёт ввод: введите строку и нажмите Enter', send: 'Отправить', eof: 'Конец ввода',
+      stdinLabel: 'Заготовленный ввод (необязательно)', stdinPh: 'Одна строка ввода на строку',
+      stdinNote: 'Если поле пустое, программа сама ждёт ввод в окне вывода, как в консоли. Конец ввода: кнопка или Ctrl+D.',
+      ref: 'Справка по языку', mine: 'Мой код', addFile: '+ файл', addFileAria: 'Добавить файл', moduleComment: '// модуль ',
+      hint: 'Нажмите «Запустить», чтобы выполнить программу.', done: 'Готово · ', ms: ' мс', error: 'Ошибка', stopped: 'Остановлено', waiting: 'Ждёт ввода…', running: 'Выполняется…',
+      internal: 'Внутренняя ошибка: ', crash: 'сбой выполнения', timeout1: 'Программа остановлена по таймауту (', timeout2: ' с без учёта time.wait). Возможно, бесконечный поток без take или take_while.',
+      stoppedMsg: 'Выполнение остановлено.', themeAuto: 'Тема: авто', themeLight: 'Тема: светлая', themeDark: 'Тема: тёмная', langBtn: 'EN'
+    }
+  };
+  var LANG = 'en';
+  (function () {
+    var q = /[?&]lang=(ru|en)/.exec(location.search), sv = null;
+    try { sv = localStorage.getItem('prismflow.lang'); } catch (e) { sv = null; }
+    if (q) LANG = q[1]; else if (sv === 'ru' || sv === 'en') LANG = sv; else if (/^ru/i.test(navigator.language || '')) LANG = 'ru';
+  })();
+  function tr(k) { return T[LANG][k]; }
+  var dirty = false;
+
+  function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function setWorkspace(files, stdin) {
+    state.files = clone(files); state.order = Object.keys(state.files);
+    if (state.order.indexOf('main') < 0) { state.files.main = ''; state.order.unshift('main'); }
+    state.order = ['main'].concat(state.order.filter(function (n) { return n !== 'main'; }));
+    state.current = 'main'; state.stdin = stdin || '';
+    $('stdin').value = state.stdin;
+    renderTabs(); loadCurrent(); clearOut(true);
+  }
+  function snapshot() { return { files: clone(state.files), stdin: $('stdin').value }; }
+  function saveMine() { mine = snapshot(); store('prism.mine', JSON.stringify(mine)); }
+
+  /* ---------- редактор ---------- */
+  var code = $('code'), gutter = $('gutter');
+  function renderGutter(bad) {
+    var n = code.value.split('\n').length, h = '';
+    for (var i = 1; i <= n; i++) h += '<div' + (bad === i ? ' class="bad"' : '') + '>' + i + '</div>';
+    gutter.innerHTML = h; gutter.scrollTop = code.scrollTop;
+  }
+  function loadCurrent() {
+    code.value = state.files[state.current] || '';
+    $('fname').value = state.current; $('fname').disabled = state.current === 'main';
+    $('delfile').hidden = state.current === 'main';
+    renderGutter();
+  }
+  code.addEventListener('scroll', function () { gutter.scrollTop = code.scrollTop; });
+  code.addEventListener('input', function () {
+    state.files[state.current] = code.value; renderGutter(); markEdited();
+  });
+  /* ---------- udobstva redaktora: avtootstupy, skobki, Tab, kommentarii ---------- */
+  var IND = '    ', PAIRS = { '(': ')', '[': ']', '{': '}', '"': '"', '`': '`' }, CLOSERS = ')]}"`', busy = false;
+  function lineStart(v, i) { return v.lastIndexOf('\n', i - 1) + 1; }
+  function isWord(c) { return !!c && /[\p{L}\p{N}_]/u.test(c); }
+  /* zamena [from, to) na text cherez execCommand, chtoby rabotali Ctrl+Z / otmena na telefone */
+  function edit(from, to, text, selS, selE) {
+    busy = true;
+    try {
+      code.focus(); code.setSelectionRange(from, to);
+      var ok = false;
+      try { ok = text ? document.execCommand('insertText', false, text) : (from === to || document.execCommand('delete')); } catch (_) {}
+      if (!ok) { code.setRangeText(text, from, to, 'end'); code.dispatchEvent(new Event('input')); }
+    } finally { busy = false; }
+    code.setSelectionRange(selS, selE == null ? selS : selE);
+  }
+  function onEnter() {
+    var v = code.value, s = code.selectionStart, t = code.selectionEnd;
+    var before = v.slice(lineStart(v, s), s), ind = before.match(/^ */)[0];
+    var core = before.replace(/\/\/.*$/, '').replace(/\s+$/, '');
+    var opens = /(->|::|=>|[{(\[])$/.test(core) || (/=$/.test(core) && !/[=!<>]=$/.test(core));
+    var last = before.slice(-1);
+    if (PAIRS[last] && last !== PAIRS[last] && v.charAt(t) === PAIRS[last]) {   // {|}  ->  tri stroki
+      edit(s, t, '\n' + ind + IND + '\n' + ind, s + 1 + ind.length + IND.length);
+    } else {
+      var add = '\n' + ind + (opens ? IND : '');
+      edit(s, t, add, s + add.length);
+    }
+    return true;
+  }
+  function onChar(ch) {
+    var v = code.value, s = code.selectionStart, t = code.selectionEnd, prev = v.charAt(s - 1), next = v.charAt(t);
+    if (s === t && next === ch && CLOSERS.indexOf(ch) >= 0) { code.setSelectionRange(s + 1, s + 1); return true; }   // pereprygnut' zakry`vayushhuyu
+    if (PAIRS[ch]) {
+      var close = PAIRS[ch];
+      if (s !== t) { edit(s, t, ch + v.slice(s, t) + close, s + 1, t + 1); return true; }   // obernut' vy`delenie
+      if (ch === close && (isWord(prev) || isWord(next) || prev === ch)) return false;
+      if (next && !/[\s)\]}.,;:]/.test(next)) return false;
+      edit(s, t, ch + close, s + 1); return true;
+    }
+    if (')]}'.indexOf(ch) >= 0 && s === t) {   // zakry`vayushhaya na pustoj stroke s otstupom - na urovenʹ levee
+      var before = v.slice(lineStart(v, s), s);
+      if (/^ +$/.test(before)) { var n = Math.min(IND.length, before.length); edit(s - n, s, ch, s - n + 1); return true; }
+    }
+    return false;
+  }
+  function onBackspace() {
+    var v = code.value, s = code.selectionStart, t = code.selectionEnd;
+    if (s !== t || s === 0) return false;
+    var pr = v.charAt(s - 1), nx = v.charAt(s);
+    if (PAIRS[pr] && PAIRS[pr] === nx) { edit(s - 1, s + 1, '', s - 1); return true; }   // udalit' paru ()
+    var before = v.slice(lineStart(v, s), s);
+    if (before.length > 0 && /^ +$/.test(before)) { var n = before.length % IND.length || IND.length; edit(s - n, s, '', s - n); return true; }
+    return false;
+  }
+  function blockIndent(dedent) {
+    var v = code.value, s = code.selectionStart, t = code.selectionEnd, ls = lineStart(v, s);
+    var le = (t > s && v.charAt(t - 1) === '\n') ? t - 1 : t, end = v.indexOf('\n', le);
+    if (end < 0) end = v.length;
+    var first = 0, total = 0;
+    var lines = v.slice(ls, end).split('\n').map(function (l, i) {
+      var d = 0;
+      if (dedent) { var m = l.match(/^ {1,4}/); if (m) { d = -m[0].length; l = l.slice(m[0].length); } }
+      else if (l.length) { l = IND + l; d = IND.length; }
+      if (i === 0) first = d; total += d; return l;
+    });
+    var ns = Math.max(ls, s + first);
+    edit(ls, end, lines.join('\n'), ns, s === t ? ns : t + total);
+  }
+  function toggleComment() {
+    var v = code.value, s = code.selectionStart, t = code.selectionEnd, ls = lineStart(v, s);
+    var le = (t > s && v.charAt(t - 1) === '\n') ? t - 1 : t, end = v.indexOf('\n', le);
+    if (end < 0) end = v.length;
+    var src = v.slice(ls, end).split('\n'), real = src.filter(function (l) { return l.trim(); });
+    var allC = real.length > 0 && real.every(function (l) { return /^\s*\/\//.test(l); });
+    var minInd = Math.min.apply(null, real.map(function (l) { return l.match(/^ */)[0].length; }).concat([1e9]));
+    var first = 0, total = 0;
+    var lines = src.map(function (l, i) {
+      var d = 0;
+      if (!l.trim()) { /* pustye ne trogaem */ }
+      else if (allC) { var m = l.match(/^(\s*)\/\/ ?/); d = -(m[0].length - m[1].length); l = m[1] + l.slice(m[0].length); }
+      else { l = l.slice(0, minInd) + '// ' + l.slice(minInd); d = 3; }
+      if (i === 0) first = d; total += d; return l;
+    });
+    var ns = Math.max(ls, s + first);
+    edit(ls, end, lines.join('\n'), ns, s === t ? ns : t + total);
+  }
+  code.addEventListener('beforeinput', function (e) {
+    if (busy || e.isComposing) return;
+    var done = false;
+    if (e.inputType === 'insertLineBreak' || e.inputType === 'insertParagraph') done = onEnter();
+    else if (e.inputType === 'insertText' && e.data && e.data.length === 1) done = onChar(e.data);
+    else if (e.inputType === 'deleteContentBackward') done = onBackspace();
+    if (done) e.preventDefault();
+  });
+  code.addEventListener('keydown', function (e) {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      var s = code.selectionStart, t = code.selectionEnd;
+      if (e.shiftKey || code.value.slice(s, t).indexOf('\n') >= 0) { blockIndent(e.shiftKey); return; }
+      var col = s - lineStart(code.value, s), pad = IND.slice(0, IND.length - col % IND.length);
+      edit(s, t, pad, s + pad.length);
+    } else if ((e.ctrlKey || e.metaKey) && e.key === '/') { e.preventDefault(); toggleComment(); }
+  });
+  $('stdin').addEventListener('input', function () { state.stdin = $('stdin').value; markEdited(); });
+  function markEdited() { $('examples').value = 'mine'; saveMine(); }
+
+  /* ---------- вкладки ---------- */
+  function renderTabs() {
+    var box = $('tabs'); box.innerHTML = '';
+    state.order.forEach(function (name) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'tab'; b.textContent = name; b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', String(name === state.current));
+      b.addEventListener('click', function () { state.current = name; renderTabs(); loadCurrent(); });
+      box.appendChild(b);
+    });
+    var add = document.createElement('button');
+    add.type = 'button'; add.className = 'tab add'; add.textContent = tr('addFile'); add.setAttribute('aria-label', tr('addFileAria'));
+    add.addEventListener('click', function () {
+      var i = 1; while (state.files['module_' + i] !== undefined) i++;
+      var nm = 'module_' + i; state.files[nm] = tr('moduleComment') + nm + '\n'; state.order.push(nm); state.current = nm;
+      renderTabs(); loadCurrent(); markEdited();
+    });
+    box.appendChild(add);
+  }
+  $('fname').addEventListener('change', function () {
+    var old = state.current, nm = $('fname').value.trim();
+    var ok = /^[\p{L}_][\p{L}\p{N}_]*$/u.test(nm) && nm !== 'main' && (state.files[nm] === undefined || nm === old);
+    if (!ok) { $('fname').value = old; return; }
+    if (nm === old) return;
+    state.files[nm] = state.files[old]; delete state.files[old];
+    state.order[state.order.indexOf(old)] = nm; state.current = nm;
+    renderTabs(); markEdited();
+  });
+  $('delfile').addEventListener('click', function () {
+    var nm = state.current; if (nm === 'main') return;
+    delete state.files[nm]; state.order = state.order.filter(function (x) { return x !== nm; });
+    state.current = 'main'; renderTabs(); loadCurrent(); markEdited();
+  });
+
+  /* ---------- примеры ---------- */
+  var sel = $('examples');
+  function fillExamples() {
+    var cur = sel.value; sel.innerHTML = '';
+    var o = document.createElement('option'); o.value = 'mine'; o.textContent = tr('mine'); sel.appendChild(o);
+    EXAMPLES[LANG].forEach(function (e) { var p = document.createElement('option'); p.value = e.id; p.textContent = e.name; sel.appendChild(p); });
+    if (cur) sel.value = cur;
+  }
+  (function () {
+    fillExamples();
+  })();
+  sel.addEventListener('change', function () {
+    if (sel.value === 'mine') { if (mine) setWorkspace(mine.files, mine.stdin); return; }
+    var e = EXAMPLES[LANG].filter(function (x) { return x.id === sel.value; })[0];
+    if (e) setWorkspace(e.files, e.stdin || '');
+  });
+
+  /* ---------- вывод ---------- */
+  var out = $('out'), statusEl = $('status');
+  function setStatus(text, cls) { statusEl.textContent = text; statusEl.className = 'status' + (cls ? ' ' + cls : ''); }
+  var hintOn = false;
+  function clearOut(hint) {
+    out.textContent = ''; hintOn = false;
+    if (hint) { var s = document.createElement('span'); s.className = 'hint'; s.textContent = tr('hint'); out.appendChild(s); hintOn = true; }
+    setStatus('');
+  }
+  function appendLines(lines) { out.appendChild(document.createTextNode(lines.join('\n') + '\n')); out.scrollTop = out.scrollHeight; }
+  function showError(msg, line) {
+    var d = document.createElement('span'); d.className = 'err'; d.textContent = msg; out.appendChild(d);
+    var cur = state.current === 'main' ? line : null; renderGutter(cur);
+  }
+
+  /* ---------- запуск ---------- */
+  var runBtn = $('run'), stopBtn = $('stop'), inrow = $('inrow'), live = $('liveline');
+  var session = null;
+  var GLUE = '\n;self.onmessage=function(e){var d=e.data,batch=[],last=Date.now(),t0=performance.now();' +
+    'function flush(){if(batch.length){self.postMessage({type:"out",lines:batch});batch=[];}last=Date.now();}' +
+    'var mem={};var vfs={read:function(p){if(!(p in mem))throw new Error("No such file or directory");return mem[p];},write:function(p,t,m){mem[p]=(m==="a"&&p in mem?mem[p]:"")+t;},exists:function(p){return p in mem;},remove:function(p){if(!(p in mem))throw new Error("No such file or directory");delete mem[p];},list:function(p){var q=p==="."?"":p.replace(/\\/$/,"")+"/";return Object.keys(mem).filter(function(k){return k.indexOf(q)===0&&k.slice(q.length).indexOf("/")<0;}).map(function(k){return k.slice(q.length);});}};' +
+    'function xhr(m,u,h,b,t){var x=new XMLHttpRequest();x.open(m,u,false);for(var k in h)x.setRequestHeader(k,h[k]);try{x.send(b);}catch(e){throw new Error("network error or blocked by CORS");}if(x.status===0)throw new Error("network error or blocked by CORS");var hs={};x.getAllResponseHeaders().split("\\r\\n").forEach(function(l){var c=l.indexOf(":");if(c>0)hs[l.slice(0,c)]=l.slice(c+1).trim();});return {status:x.status,headers:hs,body:x.responseText};}' +
+    'var r=prismRun({fs:vfs,http:xhr,source:d.source,files:d.files,stdin:d.stdin,eof:d.eof,skip:d.skip,seed:d.seed,flush:flush,onSleep:function(ms){self.postMessage({type:"sleep",ms:ms});},print:function(s){batch.push(s);if(batch.length>=300||Date.now()-last>60)flush();}});' +
+    'flush();self.postMessage({type:"done",ok:r.ok,error:r.error,line:r.line,needInput:!!r.needInput,ms:performance.now()-t0});};';
+  var workerUrl = null;
+  function getUrl() { if (!workerUrl) workerUrl = URL.createObjectURL(new Blob([ENGINE + GLUE], { type: 'text/javascript' })); return workerUrl; }
+
+  function finish(kind, msg, ms, line) {
+    clearTimeout(timer); timer = null; inrow.hidden = true;
+    runBtn.disabled = false; stopBtn.hidden = true;
+    if (kind === 'ok') setStatus(tr('done') + (ms < 10 ? ms.toFixed(1) : Math.round(ms)) + tr('ms'), 'ok');
+    else if (kind === 'err') { setStatus(tr('error'), 'bad'); showError(msg, line); }
+    else { setStatus(tr('stopped'), 'bad'); showError(msg, null); }
+  }
+  function killWorker() { if (worker) { worker.terminate(); worker = null; } }
+
+  function stdinLines() {
+    var v = $('stdin').value; if (v === '') return [];
+    var a = v.replace(/\r/g, '').split('\n'); if (a[a.length - 1] === '') a.pop(); return a;
+  }
+  function echo(text) {
+    var s = document.createElement('span'); s.className = 'echo'; s.textContent = text + '\n'; out.appendChild(s); out.scrollTop = out.scrollHeight;
+  }
+  function awaitInput() {
+    killWorker(); clearTimeout(timer); timer = null;
+    runBtn.disabled = false; stopBtn.hidden = false; setStatus(tr('waiting'));
+    inrow.hidden = false; live.value = ''; try { live.focus(); } catch (e) {}
+  }
+  function run() {
+    killWorker(); runId++;
+    var inter = $('stdin').value === '';
+    session = { interactive: inter, pre: stdinLines(), inputs: [], eof: false, shown: 0, seed: (Math.random() * 1e9) | 0 };
+    clearOut(false); renderGutter(); inrow.hidden = true;
+    step();
+  }
+  /* один проход программы; после ввода строки программа перезапускается, уже показанный вывод пропускается */
+  function step() {
+    var id = ++runId, s = session;
+    runBtn.disabled = true; stopBtn.hidden = false; inrow.hidden = true; setStatus(tr('running'));
+    var payload = { source: state.files.main, files: state.files, stdin: s.interactive ? s.inputs : s.pre, eof: s.interactive ? s.eof : true, skip: s.shown, seed: s.seed };
+    var w; try { w = new Worker(getUrl()); } catch (e) { w = null; }
+    if (!w) { runInline(payload, id); return; }
+    worker = w;
+    w.onmessage = function (e) {
+      if (id !== runId) return; var m = e.data;
+      if (m.type === 'out') { s.shown += m.lines.length; appendLines(m.lines); }
+      else if (m.type === 'sleep') { extra += m.ms; armTimer(); }
+      else if (m.type === 'done') { killWorker(); if (m.needInput) awaitInput(); else if (m.ok) finish('ok', '', m.ms); else finish('err', m.error, m.ms, m.line); }
+    };
+    w.onerror = function (e) { if (id !== runId) return; killWorker(); finish('err', tr('internal') + (e.message || tr('crash')), 0, null); };
+    var extra = 0, t0 = Date.now();
+    function armTimer() {
+      clearTimeout(timer);
+      timer = setTimeout(function () { if (id !== runId) return; killWorker(); finish('stop', tr('timeout1') + TIMEOUT_MS / 1000 + tr('timeout2'), 0); }, Math.max(0, t0 + TIMEOUT_MS + extra - Date.now()));
+    }
+    armTimer();
+    w.postMessage(payload);
+  }
+  function runInline(payload, id) {
+    var batch = [], t0 = performance.now(), s = session;
+    try {
+      var f = new Function(ENGINE + '\n;return prismRun;')();
+      payload.print = function (x) { batch.push(x); };
+      var r = f(payload);
+      s.shown += batch.length; appendLines(batch);
+      if (r.needInput) awaitInput(); else r.ok ? finish('ok', '', performance.now() - t0) : finish('err', r.error, 0, r.line);
+    } catch (e) { finish('err', tr('internal') + e.message, 0, null); }
+  }
+  inrow.addEventListener('submit', function (e) {
+    e.preventDefault(); if (!session || inrow.hidden) return;
+    var text = live.value; session.inputs.push(text); echo('› ' + text); step();
+  });
+  $('eof').addEventListener('click', function () {
+    if (!session || inrow.hidden) return; session.eof = true; echo('^D'); step();
+  });
+  live.addEventListener('keydown', function (e) {
+    if (e.ctrlKey && (e.key === 'd' || e.key === 'D')) { e.preventDefault(); $('eof').click(); }
+  });
+  runBtn.addEventListener('click', run);
+  stopBtn.addEventListener('click', function () { runId++; killWorker(); finish('stop', tr('stoppedMsg'), 0); });
+  document.addEventListener('keydown', function (e) { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); if (!runBtn.disabled) run(); } });
+
+  /* ---------- тема ---------- */
+  var themes = ['auto', 'light', 'dark'], ti = 0;
+  var savedTheme = load('prism.theme'); if (savedTheme && themes.indexOf(savedTheme) >= 0) ti = themes.indexOf(savedTheme);
+  function applyTheme() {
+    var t = themes[ti], r = document.documentElement;
+    if (t === 'auto') r.removeAttribute('data-theme'); else r.setAttribute('data-theme', t);
+    $('theme').textContent = t === 'auto' ? tr('themeAuto') : t === 'light' ? tr('themeLight') : tr('themeDark');
+  }
+  $('theme').addEventListener('click', function () { ti = (ti + 1) % 3; store('prism.theme', themes[ti]); applyTheme(); });
+  applyTheme();
+
+  /* ---------- старт ---------- */
+  /* применить язык ко всем статичным строкам */
+  function applyLang() {
+    document.documentElement.lang = LANG;
+    var nodes = document.querySelectorAll('[data-i18n]');
+    for (var i = 0; i < nodes.length; i++) { var n = nodes[i], v = tr(n.getAttribute('data-i18n')); if (v === undefined) continue; if (n.getAttribute('data-i18n-html')) n.innerHTML = v; else n.textContent = v; }
+    nodes = document.querySelectorAll('[data-i18n-ph]'); for (i = 0; i < nodes.length; i++) nodes[i].setAttribute('placeholder', tr(nodes[i].getAttribute('data-i18n-ph')));
+    nodes = document.querySelectorAll('[data-i18n-aria]'); for (i = 0; i < nodes.length; i++) nodes[i].setAttribute('aria-label', tr(nodes[i].getAttribute('data-i18n-aria')));
+    $('lang').textContent = tr('langBtn');
+    fillExamples(); renderTabs(); applyTheme();
+    if (hintOn) { var h = out.querySelector('.hint'); if (h) h.textContent = tr('hint'); }
+  }
+  $('lang').addEventListener('click', function () {
+    LANG = LANG === 'en' ? 'ru' : 'en';
+    try { localStorage.setItem('prismflow.lang', LANG); } catch (e) { /* хранилище недоступно */ }
+    applyLang();
+    if (sel.value !== 'mine') { var ex = EXAMPLES[LANG].filter(function (x) { return x.id === sel.value; })[0]; if (ex) setWorkspace(ex.files, ex.stdin || ''); }
+  });
+  var first = EXAMPLES[LANG][0];
+  var saved = null; try { saved = JSON.parse(load('prism.mine') || 'null'); } catch (e) { saved = null; }
+  if (saved && saved.files && saved.files.main !== undefined) { mine = saved; setWorkspace(saved.files, saved.stdin); sel.value = 'mine'; }
+  else { mine = { files: clone(first.files), stdin: '' }; setWorkspace(first.files, first.stdin || ''); sel.value = first.id; }
+  applyLang();
+})();
+</script>
+
+</body></html>

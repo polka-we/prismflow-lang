@@ -1,0 +1,11 @@
+fib 0 = 0
+fib 1 = 1
+fib n = fib(n - 1) + fib(n - 2)
+a = range(400000).map(_ % 1000)
+res := []
+range(33) ::par k
+    t := 0
+    a ::x
+        t := t + x * k
+    print(k, t, fib(22))
+print("ok")

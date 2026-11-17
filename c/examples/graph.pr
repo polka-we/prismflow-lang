@@ -1,0 +1,22 @@
+// ввод: n m, затем m рёбер
+[n, m] = request.ints().take(2).to_list()
+edges = request.ints().take(2 * m).chunk(2).to_list()
+adj := [[]] * (n + 1)          // [x] * n копирует элементы: строки независимы
+edges :: e ->
+    adj[e[0]] += e[1]
+    adj[e[1]] += e[0]
+
+// узел - пара [вершина, родитель]: так обход дерева не возвращается назад
+kids = p -> adj[p[0]] where _ != p[1] select [_, p[0]]
+print("вглубь: ", [[1, 0]].expand(kids).map(_[0]).to_list())
+print("вширь:  ", [[1, 0]].expand_bfs(kids).map(_[0]).to_list())
+print("вход/выход (выход со знаком -):", [[1, 0]].expand(kids, p -> [-p[0], 0]).map(_[0]).to_list())
+
+// сортировка по составному ключу: сначала по длине, потом по алфавиту
+words = ["слон", "кот", "ёж", "лиса", "рысь"]
+print(words.sort([len(_), _]))
+
+// стек
+st := [1, 2, 3]
+top = st.pop()
+print(top, st)

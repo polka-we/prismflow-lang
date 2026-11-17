@@ -1,0 +1,12 @@
+f(n) = n match
+  is n < 2 -> return 5
+  else -> 7
+print(f(1))
+print(f(9))
+g(n) =
+  r = n match
+    is 0 -> return "zero"
+    else -> "other"
+  return r + "!"
+print(g(0))
+print(g(1))

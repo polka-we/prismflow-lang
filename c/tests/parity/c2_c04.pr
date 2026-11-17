@@ -1,0 +1,8 @@
+f(a, b) = a + b
+g(x) =
+    y = x * 2
+    y + 1
+print(f(1, 2), g(5))
+h = _ + 1
+print(h(2))
+print((_ * _)(3))

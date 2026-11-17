@@ -1,0 +1,1 @@
+print(5 is int, "a" is string, [1] is array, [a: 1] is object, none is none)

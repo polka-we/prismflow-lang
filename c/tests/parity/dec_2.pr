@@ -1,0 +1,40 @@
+xs = [3.5d, 1.25d, 2d, -0.75d, 10]
+print(xs.sort())
+print(sum(xs), min(xs), max(xs))
+print(xs.map(x -> x * 2))
+print(`value: ${1.5d} and ${-2.25d}`)
+o = [a: 0.5d, b: 1d]
+print(o)
+print(1d / 8d, 1d / 7d, -1d / 3d)
+print(2d ** -3, 1.1d ** 10, (-2d) ** 3)
+print(7.5d % 2, -7.5d % 2, 7.5d % -2)
+print(1d / 0)
+print(5d % 0)
+print(dec("abc"))
+print(dec("1e-5"), dec("-1.5E3"), dec(" 42 "))
+print(dec(1/3, 5), dec(2.5, 0), dec(3.5, 0))
+print(dec(100))
+print(0.1d * 3 == 0.3d, 0.1d * 3)
+print(1.5d == 1.5, 1.5d != 1.5, 2 == 2d, 2.0 == 2d)
+print(floor(-0.5d), ceil(-0.5d), round(-0.5d), round(0.5d), int(-3.9d), floor(0.999999999999999999999d))
+print(abs(-0.000001d), abs(5d))
+print(type(1d), type(dec(1)))
+print(123456789012345678901234567890d + 1d)
+print(123456789012345678901234567890.123456789d * 2)
+print(sqrt(16d), sqrt(0d), sqrt(0.25d), sqrt(-1d))
+r = 3.14159d
+area = r * r
+print(area, round(area, 3))
+x := 1d
+range(10):: x := x * 1.1d
+print(x)
+y := 0d
+range(100):: y += 0.01d
+print(y, y == 1d)
+f = a -> a + 0.5d
+print(f(1), f(0.25))
+m = 2.5d
+res = m match
+    is 2.5 -> "match"
+    else -> "no"
+print(res)

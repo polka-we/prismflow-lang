@@ -1,0 +1,10 @@
+// Josephus problem: every k-th person leaves the circle.
+josephus n k =
+    ring := range(1, n + 1).to_list()
+    pos := 0
+    out := []
+    range(n):: _t
+        pos := (pos + k - 1) % len(ring)
+        out += ring.remove(pos)
+    out
+print(josephus(7, 3))                        // [3, 6, 2, 7, 5, 1, 4]

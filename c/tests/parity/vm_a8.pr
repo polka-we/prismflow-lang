@@ -1,0 +1,5 @@
+f x = range(x).map(_ * 2)
+print(f(3))
+g x = x + 1
+print(range(4).map(g))
+print(g(4) + g(5))

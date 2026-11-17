@@ -1,0 +1,4 @@
+x = 3
+x is
+    3 -> print("три")
+    else -> print("не три")

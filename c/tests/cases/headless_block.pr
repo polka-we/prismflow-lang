@@ -1,0 +1,19 @@
+n = 90
+test =
+    _ match
+        is < 90 -> print("Меньше")
+        is 90 -> print("Равно")
+        else -> print("Больш")
+test(n)
+test2 =
+    k = _
+    print(type(k))
+    is k < 90 -> print("Меньше")
+    is k == 90 -> print("Равно")
+    else -> print("Больш")
+test2(n)
+test2(5)
+x =
+    a = 2
+    a * 21
+print(x)

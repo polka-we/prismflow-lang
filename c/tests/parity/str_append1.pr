@@ -1,0 +1,18 @@
+s := ""
+range(20000):: s += "ab"
+print(s.len)
+t := s
+s += "XYZ"
+print(t.len, s.len, t == s, s.len - t.len)
+print(int("12345678901234567890") * 0 + 1)
+a := "x" * 100
+b := a
+a += "1"
+b += "2"
+print(a.len, b.len, a[100], b[100], a == b)
+c := a + "3"
+print(c[101], a.len, c.len)
+n := "1" * 70
+m := n
+n += "9"
+print(int(m) % 10, int(n) % 10)

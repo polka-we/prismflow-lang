@@ -1,0 +1,8 @@
+w(n) =
+    time.wait(n)
+    print("w", n)
+    n
+a = w(30)
+b = w(10)
+print("запущены")
+print(await a, await b)

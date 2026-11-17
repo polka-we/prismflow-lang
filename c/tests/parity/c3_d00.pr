@@ -1,0 +1,6 @@
+[a, b] = [1, 2]
+print(a, b)
+[x, ...rest] = [1, 2, 3]
+print(x, rest)
+[name: n, age: g] = [name: "q", age: 5]
+print(n, g)

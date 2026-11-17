@@ -1,0 +1,9 @@
+Point[x: 1, y: 2] Point true
+User[name: "Kirill", age: 18] User[name: "Alena", age: 19]
+12 12
+[3, 10]
+25
+10 ПРИВЕТ!
+точка круг целое что-то
+Point[x: 2, y: 3]
+Point[x: 1, y: 2] Point[x: 100, y: 2]

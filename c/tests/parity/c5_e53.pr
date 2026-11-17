@@ -1,0 +1,3 @@
+print(1.5.floor())
+print(5.to_string())
+print((-5).abs())

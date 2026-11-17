@@ -1,0 +1,6 @@
+g(n) =
+    time.wait(n)
+    print("g", n)
+[30, 10, 20] ::par n ->
+    g(n)
+print("done")

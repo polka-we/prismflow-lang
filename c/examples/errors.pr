@@ -1,0 +1,16 @@
+// деление на ноль, неверное число и т.п. возвращают значение типа error
+r = 10 / 0
+print(r)
+print(r ?? "по умолчанию")   // ?? подменяет none и error
+
+parsed = request.lines()
+    .take_while(_ != "stop")
+    .map(_.to_int())
+
+parsed::v
+    v match
+        is error -> print("пропуск: " + v.message)
+        else -> print("число " + v)
+
+// find ничего не нашёл -> none
+print([1, 2, 3].find(_ > 5) ?? "не найдено")

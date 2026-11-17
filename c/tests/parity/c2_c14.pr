@@ -1,0 +1,4 @@
+x := 0
+while_ = range(5) :: i ->
+    x := x + i
+print(x)

@@ -1,0 +1,15 @@
+s := 0
+range(1000)::
+    s += _
+print(s)
+t := 0
+range(100):: x -> t := t + x
+print(t)
+q := 0
+range(4):: i ->
+    j = i * 2
+    q += j
+print(q)
+w := 0
+range(6):: par x -> w += x
+print(w)

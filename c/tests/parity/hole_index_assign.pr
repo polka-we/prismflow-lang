@@ -1,0 +1,10 @@
+p := [true] * 10
+range(2, 5):: p[_] := false
+print(p)
+q := [0] * 6
+is q[0] == 0 -> range(1, 4):: q[_] := _ * 10
+else -> none
+print(q)
+o := [a: 0]
+range(3):: o.a += _ + 1
+print(o)

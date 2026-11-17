@@ -1,0 +1,18 @@
+f n =
+    a = [n, n + 1, "t" + n.to_string()]
+    return a
+keep := []
+range(100) :: i ->
+    r = f(i)
+    keep += [r]
+print(keep.len(), keep[9])
+total := 0
+range(100) :: i ->
+    total := total + f(i)[1]
+print(total)
+g = x -> [x, [x * 2, "k" + x.to_string()]]
+objs := [a: 0]
+range(25) :: i ->
+    v = g(i)
+    objs["n" + i.to_string()] := v
+print(objs.n24, objs.n3)

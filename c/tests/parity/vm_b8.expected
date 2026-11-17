@@ -1,0 +1,4 @@
+499500
+4950
+12
+RuntimeError (line 14): cannot assign to outer variable "w" inside ::par

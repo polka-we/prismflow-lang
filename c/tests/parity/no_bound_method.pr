@@ -1,0 +1,6 @@
+w = "ab"
+f = w.upper
+print(f())
+print(["a", "b"].map("x".upper))
+print([3, 1, 2].sort())
+print("a-b".split("-").len)

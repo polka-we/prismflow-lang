@@ -1,0 +1,2 @@
+n = int(request.line())
+print(n * 2)

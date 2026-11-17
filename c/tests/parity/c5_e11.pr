@@ -1,0 +1,6 @@
+g(n) =
+    time.wait(n)
+    print("g", n)
+[3, 1, 2] :: n ->
+    g(n)
+print("done")

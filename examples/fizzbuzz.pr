@@ -1,0 +1,6 @@
+// FizzBuzz: no `if`, no loop statement. `is` is an expression, `::` runs a function for each item.
+fizz n = is n % 15 == 0 -> "FizzBuzz"
+         is n % 3 == 0 -> "Fizz"
+         is n % 5 == 0 -> "Buzz"
+         else -> n
+range(1, 16).map(fizz)::print

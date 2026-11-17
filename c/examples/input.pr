@@ -1,0 +1,10 @@
+// сумма чисел до слова stop
+total = request.lines()
+    .take_while(_ != "stop")
+    .map(_.to_int())
+    .reduce(0, _1 + _2)
+print("сумма: " + total)
+
+// одна следующая строка
+rest = request.line()
+print("после stop: " + rest)

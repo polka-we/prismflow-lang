@@ -1,0 +1,7 @@
+sum := 0
+sum += 1
+print(sum)
+max := 3
+print(max)
+comb := 1
+print(comb)

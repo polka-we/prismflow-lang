@@ -1,0 +1,11 @@
+// Breadth-first search without a while loop: the body of `::` over a mutable array
+// also sees the items appended to it while it runs ("worklist").
+g = [[1, 2], [3], [3, 4], [5], [5], []]      // g[v] = neighbours of v
+dist := [-1] * 6
+dist[0] := 0
+queue := [0]
+queue:: v
+    g[v] where dist[_] < 0 :: u
+        dist[u] := dist[v] + 1
+        queue += u
+print(dist)                                  // [0, 1, 1, 2, 2, 3]

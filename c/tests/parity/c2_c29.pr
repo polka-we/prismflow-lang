@@ -1,0 +1,4 @@
+s := ""
+range(3) :: i ->
+    s := s + str(i)
+print(s)

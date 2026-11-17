@@ -1,0 +1,3 @@
+f x =
+    undefined_q += x
+print(f(1))

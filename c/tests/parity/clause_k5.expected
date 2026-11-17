@@ -1,0 +1,2 @@
+1
+RuntimeError (line 5): "g" is already declared as a constant

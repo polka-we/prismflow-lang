@@ -1,0 +1,1 @@
+print("12".index_of("м"))

@@ -1,0 +1,4 @@
+adj = [[1, 2], [3], [3], []]
+print([0].expand(adj[_]).to_list())
+print([0].expand_bfs(adj[_]).to_list())
+print([0].expand(adj[_], _ * 10).to_list())

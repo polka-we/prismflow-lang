@@ -1,0 +1,4 @@
+s = 0
+range(1, 101) :: i ->
+    s := s + i
+print(s)

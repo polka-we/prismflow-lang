@@ -1,0 +1,6 @@
+x := 0
+range(100):: x += 1
+print(x)
+y := 0
+range(5):: y += _
+print(y)

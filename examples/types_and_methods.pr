@@ -1,0 +1,12 @@
+// Types are names with fields; methods are plain functions, called with dot syntax (x.f(a) = f(x, a)).
+type Point [x, y]
+dist(Point a, Point b) = (a.x - b.x) ** 2 + (a.y - b.y) ** 2
+move(Point p, dx, dy) =
+    p.x += dx
+    p.y += dy
+p := Point(1, 2)
+print(p.dist(Point(4, 6)))                   // 25
+p.move(10, 10)
+print(p)                                     // Point[x: 11, y: 12]
+shout s = s.upper() + "!"
+print("hello".shout(), ["a b", "c d"].map(split).to_list())

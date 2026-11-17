@@ -1,0 +1,12 @@
+// Sieve of Eratosthenes, then constant-time lookups.
+limit = 100000
+sieve := [true] * (limit + 1)
+sieve[0] := false
+sieve[1] := false
+range(2, limit + 1):: i
+    is sieve[i] and i * i <= limit ->
+        range(i * i, limit + 1, i):: j
+            sieve[j] := false
+primes = range(limit + 1).filter(i -> sieve[i]).to_list()
+print(len(primes), primes.take(10))
+print(sieve[99991], sieve[99993])            // true false

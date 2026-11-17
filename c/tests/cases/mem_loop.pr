@@ -1,0 +1,7 @@
+t := 0
+range(4000000) :: i ->
+    p = [i, i + 1]
+    w = "k" + i.to_string()
+    t := t + p[1] + w.len()
+print(t)
+print(range(1000000).filter(_.to_string().len() == 5).count())

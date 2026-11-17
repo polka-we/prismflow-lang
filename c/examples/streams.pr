@@ -1,0 +1,28 @@
+// :: выполняет действие для каждого элемента
+range(5)::x -> print(x ** 2)
+
+// диапазон - поток: массив не создаётся
+print(range(10).filter(_ % 2 == 0).map(_ * _).to_list())
+
+// функция превращается в бесконечный поток через .from(старт)
+double i = i * 2
+double.from(1).take(8)::print
+
+// пока не выполнится условие
+double.from(1).take_while(_ < 100)::print
+
+// функция с побочным эффектом: поток сам вызывает её
+l i =
+    print(i)
+    return i + 1
+l.from(1).take_while(_ < 10)
+
+// reduce: свернуть поток в одно значение
+print(range(1, 11).reduce(0, _1 + _2))
+
+// enumerate, zip, sort, chunk, window
+["a", "b", "c"]::i,s -> print(i, s)
+print([3, 1, 2].sort(), [3, 1, 2].sort(-_))
+print(range(3).zip(["x", "y", "z"]))
+print(range(7).chunk(3).to_list(), range(4).window(2).to_list())
+print([1, 2, 3, 4].avg(), [1, 1, 2, 2].unique())

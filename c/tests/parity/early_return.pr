@@ -1,0 +1,24 @@
+find_first xs t =
+    xs:: x
+        is x > t -> return x
+    return -1
+print(find_first([1, 5, 9], 4), find_first([1], 4))
+is_pal s =
+    range(div(s.len, 2)):: i
+        is s[i] != s[s.len - 1 - i] -> return false
+    true
+print(is_pal("abcba"), is_pal("abca"))
+pair n =
+    range(n):: i
+        range(n):: j
+            is i * j == 6 ->
+                return [i, j]
+    none
+print(pair(5), pair(2))
+g x = is x < 0 -> return "neg" else -> "pos"
+print(g(-1), g(1))
+print("abcde".remove(1), "abcde".remove(-1), "héllo".remove(1), "ac".insert(1, "b"))
+h x = x match
+    is 1 -> return "one"
+    else -> "other"
+print(h(1), h(2))

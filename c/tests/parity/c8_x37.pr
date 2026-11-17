@@ -1,0 +1,2 @@
+request.words() :: w ->
+    print(w.upper())

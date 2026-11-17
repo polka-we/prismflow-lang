@@ -1,0 +1,3 @@
+lenn = 3
+print(lenn)
+print(lenx)

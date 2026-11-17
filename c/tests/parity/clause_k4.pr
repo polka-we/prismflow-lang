@@ -1,0 +1,7 @@
+sign < 0 = -1
+sign 0 = 0
+sign > 0 = 1
+print(sign(-5), sign(0), sign(7))
+parity % 2 == 0 = "чёт"
+parity = "нечёт"
+print(parity(4), parity(3))
